@@ -543,81 +543,31 @@ int main(int argc, char *argv[])
 	    
 	    //tcdrain(fdser);
 	    //while(ReadNextChar(fdser, &ch)){fprintf(stderr, " 4  " ); }
-	    if(write(fdser, &ACKS, strlen(ACKS) ) != strlen(ACKS)){
-		    perror(szSWriteErr);
-		    exit(2);
-	    }
-	    tcdrain(fdser);
-	    while(ReadNextChar(fdser, &ch)){fprintf(stderr, " %d  ", ch); }
 
-	    /*
-	    tcdrain(fdser);
-	    Delay(2, 0L);
-	    ///
+	    while(true){
 
-	    for(int i=0; i<4200; i++){
-		    szSerBuffer[i] = 0x00;
-	    }
-	    for(int i=0; i<100; i++){
-		    //fprintf(stderr, " %d  ", szSerBuffer[i] );
-	    }
+            if(write(fdser, &ACKS, strlen(ACKS) ) != strlen(ACKS)){
+                perror(szSWriteErr);
+                exit(2);
+            }
+            tcdrain(fdser);
 
-	    if(write(fdser, &ACKS, 1) != 1){
-		    perror(szSWriteErr);					  
-		    exit(2);
-	    }
-	    */
-	      
+            nCnt = ReadToBuffer(fdser, szSerBuffer, sizeof(szSerBuffer));
+            fprintf(stderr, "vproweather: mora biti nic (%d)\n", nCnt);
+            if(nCnt != 267 ){
+                fprintf(stderr, "Napaka \n");
+            }
+            if((nCnt = CheckCRC(267, szSerBuffer))) {
+                fprintf(stderr, "crc koda za prejem strani:  %d  \n", nCnt);
+            }
+            if((nCnt = CheckCRC(266, szSerBuffer+1))) {
+                fprintf(stderr, "crc koda za prejem strani:  %d  \n", nCnt);
+            }
 
 
 
-	    nCnt = ReadToBuffer(fdser, szSerBuffer, sizeof(szSerBuffer));	    
-	    //ReadNextChar(fdser, &ch);
-	    fprintf(stderr, "vproweather: mora biti nic (%d)\n", nCnt);
-	    nCnt = ReadToBuffer(fdser, szSerBuffer, sizeof(szSerBuffer));
-	    fprintf(stderr, "vproweather: mora biti nic (%d)\n", nCnt);
+        }
 
-
-	    tcdrain(fdser);
-	    ACKS[0] = 0x06;
-	    if(write(fdser, &ACKS, 1) != 1){
-		    perror(szSWriteErr);
-		                          exit(2);
-	    }
-
-	    nCnt = ReadToBuffer(fdser, szSerBuffer, sizeof(szSerBuffer));
-	    fprintf(stderr, "vproweather: mora biti nic (%d)\n", nCnt);
-	    
-	    //ReadNextChar(fdser, &ch);
-	    //fprintf(stderr, "vproweather: mora biti ni (%d)\n", ch);
-	    for(int ggg=0; ggg<267; ggg++){
-		    //fprintf(stderr, " b %d \n", szSerBuffer[ggg]);
-	    
-	    }
-
-	    /*
-	    
-	    if((nCnt = CheckCRC(6, szSerBuffer+1))) { 
-		    fprintf(stderr, "fdg %d.\n", nCnt);
-		    exit(2);
-	    }
-	    else if (bVerbose)
-		    printf("CRC verified good on LOOP packet.\n");
-            */
-
-	    
-
-
-
-	    /*
-	    ReadNextChar(fdser, &ch);
-	    char pa2 = ch;
-	    ReadNextChar(fdser, &ch);
-	    char pa1 = ch;
-
-	    int number = pa2 | pa1 << 8;
-	    fprintf(stderr, " %d \n", number);
-	    */
     }
 
 
