@@ -371,14 +371,7 @@ void GetARData(char *szData)
 
 
 
-uint16_t createMask(uint16_t a, uint16_t b)
-{
-   uint16_t r = 0;
-   for (uint16_t i=a; i<=b; i++)
-       r |= 1 << i;
 
-   return r;
-}
 /*--------------------------------------------------------------------------
     PrintARData
     Dumps the real time weather data to stdout.
@@ -386,13 +379,22 @@ uint16_t createMask(uint16_t a, uint16_t b)
 void PrintARData(void)
 {
 
-    uint16_t r = createMask(0,7);
     printf("%s = ", "Datum");
-    printf("%d \n" , r & ard.date1);
+    printf("%d \n" , ard.date1);
 
 
-    printf("%s = ", "Datum2");
-    printf("%d \n" , r & ard.date2);
+    uint16_t  mask;
+    mask = (1 << 7) - 1;
+    printf("%s = ", "leto ");
+    printf("%d \n" , ard.date1 & mask);
+
+    mask = ((1 << 7) - 1) << 9;
+    printf("%s = ", "leto1");
+    printf("%d \n" , ard.date1 & mask);
+
+    mask = ((1 << 7) - 1) << 10;
+    printf("%s = ", "leto2");
+    printf("%d \n" , ard.date1 & mask);
 
 
 }
