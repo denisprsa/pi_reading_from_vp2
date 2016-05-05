@@ -390,6 +390,93 @@ typedef struct t_HLDATA
     uint16_t    WCRC;           /* 438 CRC check bytes (CCITT-16 standard)      */
 } PACKED HLDATA;
 
+
+typedef struct t_ARDATA
+{
+    uint8_t unused;           /* 0 u                         */
+
+    uint16_t date1;
+    uint16_t time1;
+    uint16_t outside1;
+    uint16_t hightOut1;
+    uint16_t lowOut1;
+    uint16_t rainfall1;
+    uint16_t highRainFall1;
+    uint16_t barometer1;
+    uint16_t solar1;
+    uint16_t numwisa1;
+    uint16_t inside1;
+    uint8_t insideH1;
+    uint8_t outsideH1;
+
+    uint16_t date2;
+    uint16_t time2;
+    uint16_t outside2;
+    uint16_t hightOut2;
+    uint16_t lowOut2;
+    uint16_t rainfall2;
+    uint16_t highRainFall2;
+    uint16_t barometer2;
+    uint16_t solar2;
+    uint16_t numwisa2;
+    uint16_t inside2;
+    uint8_t insideH2;
+    uint8_t outsideH2;
+
+
+    uint16_t date3;
+    uint16_t time3;
+    uint16_t outside3;
+    uint16_t hightOut3;
+    uint16_t lowOut3;
+    uint16_t rainfall3;
+    uint16_t highRainFall3;
+    uint16_t barometer3;
+    uint16_t solar3;
+    uint16_t numwisa3;
+    uint16_t inside3;
+    uint8_t insideH3;
+    uint8_t outsideH3;
+
+
+    uint16_t date4;
+    uint16_t time4;
+    uint16_t outside4;
+    uint16_t hightOut4;
+    uint16_t lowOut4;
+    uint16_t rainfall4;
+    uint16_t highRainFall4;
+    uint16_t barometer4;
+    uint16_t solar4;
+    uint16_t numwisa4;
+    uint16_t inside4;
+    uint8_t insideH4;
+    uint8_t outsideH4;
+
+
+    uint16_t date5;
+    uint16_t time5;
+    uint16_t outside5;
+    uint16_t hightOut5;
+    uint16_t lowOut5;
+    uint16_t rainfall5;
+    uint16_t highRainFall5;
+    uint16_t barometer5;
+    uint16_t solar5;
+    uint16_t numwisa5;
+    uint16_t inside5;
+    uint8_t insideH5;
+    uint8_t outsideH5;
+
+
+    uint16_t unused_1;
+    uint16_t unused_2;
+
+    uint16_t CRC;
+
+} PACKED ARDATA;
+
+
 /* Definition of Davis EEPROM data packet */
 typedef struct t_EEDATA
 {

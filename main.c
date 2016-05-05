@@ -556,13 +556,18 @@ int main(int argc, char *argv[])
             fprintf(stderr, "vproweather: mora biti nic (%d)\n", nCnt);
             if(nCnt != 267 ){
                 fprintf(stderr, "Napaka \n");
+                break;
             }
             if((nCnt = CheckCRC(267, szSerBuffer))) {
-                fprintf(stderr, "crc koda za prejem strani:  %d  \n", nCnt);
+                fprintf(stderr, "crc koda za prejem strani1:  %d  \n", nCnt);
             }
             if((nCnt = CheckCRC(266, szSerBuffer+1))) {
-                fprintf(stderr, "crc koda za prejem strani:  %d  \n", nCnt);
+                fprintf(stderr, "crc koda za prejem strani2:  %d  \n", nCnt);
             }
+            GetARData(szSerBuffer);
+            PrintARData();
+            break;
+
 
 
 

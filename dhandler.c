@@ -267,6 +267,8 @@ static char szForeStrings[] =
 
 static RTDATA rcd;          /* the one and only real time weather packet */
 static HLDATA hld;          /* the one and only highs/lows packet */
+static ARDATA ard;
+
 
 /* local functions */
 static char* TimeConvert(uint16_t wTime);
@@ -358,6 +360,31 @@ void GetHLData(char *szData)
 }
 
 
+/*--------------------------------------------------------------------------
+    GetARData
+    Gets the high/low weather data packet to the static HLDATA struct.
+----------------------------------------------------------------------------*/
+void GetARData(char *szData)
+{
+    memcpy((char*)&ard, szData, sizeof(ARDATA));
+}
+
+
+
+/*--------------------------------------------------------------------------
+    PrintARData
+    Dumps the real time weather data to stdout.
+----------------------------------------------------------------------------*/
+void PrintARData(void)
+{
+    printf("%s = ", "Datum");
+    printf("%d \n" , ard.date1);
+
+    printf("%s = ", "Datum2");
+    printf("%d \n" , ard.date2);
+
+
+}
 
 /*--------------------------------------------------------------------------
     PrintRTData
