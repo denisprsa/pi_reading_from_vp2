@@ -377,13 +377,25 @@ void GetARData(char *szData)
 ----------------------------------------------------------------------------*/
 void PrintARData(void)
 {
+
+    r = createMask(0,7);
     printf("%s = ", "Datum");
-    printf("%d \n" , ard.date1);
+    printf("%d \n" , r & ard.date1);
+
 
     printf("%s = ", "Datum2");
-    printf("%d \n" , ard.date2);
+    printf("%d \n" , r & ard.date2);
 
 
+}
+
+unsigned createMask(unsigned a, unsigned b)
+{
+   unsigned r = 0;
+   for (unsigned i=a; i<=b; i++)
+       r |= 1 << i;
+
+   return r;
 }
 
 /*--------------------------------------------------------------------------
