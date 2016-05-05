@@ -371,6 +371,14 @@ void GetARData(char *szData)
 
 
 
+unsigned createMask(unsigned a, unsigned b)
+{
+   unsigned r = 0;
+   for (unsigned i=a; i<=b; i++)
+       r |= 1 << i;
+
+   return r;
+}
 /*--------------------------------------------------------------------------
     PrintARData
     Dumps the real time weather data to stdout.
@@ -389,14 +397,6 @@ void PrintARData(void)
 
 }
 
-unsigned createMask(unsigned a, unsigned b)
-{
-   unsigned r = 0;
-   for (unsigned i=a; i<=b; i++)
-       r |= 1 << i;
-
-   return r;
-}
 
 /*--------------------------------------------------------------------------
     PrintRTData
