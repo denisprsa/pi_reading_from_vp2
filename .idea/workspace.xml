@@ -37,8 +37,8 @@
       <file leaf-file-name="dhandler.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/dhandler.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="214">
-              <caret line="380" column="1" selection-start-line="380" selection-start-column="1" selection-end-line="380" selection-end-column="1" />
+            <state relative-caret-position="124">
+              <caret line="373" column="8" selection-start-line="373" selection-start-column="8" selection-end-line="373" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -435,8 +435,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/dhandler.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="214">
-          <caret line="380" column="1" selection-start-line="380" selection-start-column="1" selection-end-line="380" selection-end-column="1" />
+        <state relative-caret-position="124">
+          <caret line="373" column="8" selection-start-line="373" selection-start-column="8" selection-end-line="373" selection-end-column="8" />
           <folding />
         </state>
       </provider>
