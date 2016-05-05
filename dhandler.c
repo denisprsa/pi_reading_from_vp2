@@ -378,7 +378,7 @@ void GetARData(char *szData)
 void PrintARData(void)
 {
 
-    r = createMask(0,7);
+    unsigned r = createMask(0,7);
     printf("%s = ", "Datum");
     printf("%d \n" , r & ard.date1);
 
