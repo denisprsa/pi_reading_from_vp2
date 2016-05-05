@@ -1,0 +1,35 @@
+Opening Serial Port /home/pi/.wine/dosdevices/com3...
+Waking up weather station...
+Weather station woke up after 1 retries
+Getting real time data set...
+Got 100 characters...Good
+CRC verified good on LOOP packet.
+rtBaroTrend = Steady
+rtBaroTrendImg = baro_s
+rtBaroCurr = 30.08
+rtInsideTemp = 74.2
+rtInsideHum = 44
+rtOutsideTemp = 54.3
+rtWindSpeed = 3
+rtWindAvgSpeed = 2
+rtWindDir = 41
+rtWindDirRose = NE
+rtOutsideHum = 78
+rtRainRate = 0.00
+rtIsRaining = no
+rtUVLevel = n/a
+rtSolarRad = n/a
+rtRainStorm = 0.26
+rtStormStartDate = 04-MAY-2016
+rtDayRain = 0.26
+rtMonthRain = 2.04
+rtYearRain = 3.43
+rtDayET = 0
+rtMonthET = 0
+rtXmitBattt = 0
+rtBattVoltage = 4.1
+rtForeIcon = 6
+rtForeRule = 44
+rtForecast = Increasing clouds with little temperature change. Precipitation possible within 24 to 48 hrs.
+rtSunrise = 5:37AM
+rtSunset = 8:09PM
