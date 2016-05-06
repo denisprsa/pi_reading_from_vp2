@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
         printf(" -g, --get-graph       Get graph data.\n");
         printf(" -t, --get-time        Get weather station time.\n");
         printf(" -h, --get-arhive      Get data from last time in arhive.\n");
-	printf(" -s, --set-time        Set weather station time to system time.\n");
+	    printf(" -s, --set-time        Set weather station time to system time.\n");
         printf(" -o, --bklite-on       Turn backlite on.\n");
         printf(" -f, --bklite-off      Turn backlite off.\n");
         printf(" -r, --version         Query for Davis firmware version string.\n");
@@ -565,7 +565,8 @@ int main(int argc, char *argv[])
                 fprintf(stderr, "crc koda za prejem strani2:  %d  \n", nCnt);
             }
             GetARData(szSerBuffer);
-            PrintARData();
+
+
             break;
 
 
@@ -646,7 +647,7 @@ int GetParms(int argc, char *argv[])
             case 'm': bModel  = true; break;
             case 'x': bGetRTD = true; break;
             case 'l': bGetHLD = true; break;
-	    case 'c': bGetARH = true; break;
+	        case 'c': bGetARH = true; break;
             case 'g': bGetGD  = true; break;
             case 'v': bVerbose= true; break;
             case 't': bGetTime= true; break;
