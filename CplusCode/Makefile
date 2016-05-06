@@ -4,14 +4,14 @@ CFLAGS  = -g -Wall
 TARGET = vproweather
 all:	$(TARGET)
 
-$(TARGET): main.o VremenskaPostaja.o
-	$(CC) main.o VremenskaPostaja.o -o $(TARGET)
+$(TARGET): main.o WeatherStation.o
+	$(CC) main.o WeatherStation.o -o $(TARGET)
 
-main.o: main.cpp main.h VremenskaPostaja.h
+main.o: main.cpp main.h WeatherStation.h
 	$(CC) $(CFLAGS) -c main.cpp
 
-dhandler.o: VremenskaPostaja.cpp VremenskaPostaja.h
-	$(CC) $(CFLAGS) -c VremenskaPostaja.cpp
+dhandler.o: WeatherStation.cpp WeatherStation.h
+	$(CC) $(CFLAGS) -c WeatherStation.cpp
 
 clean:
 	rm -f $(TARGET) *.o

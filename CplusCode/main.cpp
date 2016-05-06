@@ -6,15 +6,20 @@
 #include <vector>
 #include <string>
 
-#include "VremenskaPostaja.h"
+#include "WeatherStation.h"
 
 using namespace std;
 
 int main(int argc, char *argv[])
 {
 
-    VremenskaPostaja *p = new VremenskaPostaja(1999, 7, 1);
+    WeatherStation *vp = new WeatherStation("/home/pi/.wine/dosdevices/com3");
+    //vp->OpenSerialPort();
+    //vp->WakeUpStation();
+    
+    vp->menu(argc, argv);
 
-    cout << "NAPOVED "<< p->getYear() << endl;
+
+    //cout << "NAPOVED "<< p->getYear() << endl;
     return 0;
 }
