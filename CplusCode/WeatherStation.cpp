@@ -64,25 +64,44 @@ void WeatherStation::menu(int argc, char *argv[]){
         switch (c) {
             
             case 'a':
-                /*
+                
                 // OPENING SERIAL PORT
                 this->OpenSerialPort();
                 // WAKING UP WEATHER STATION
+                
                 if(this->WakeUpStation() != -1){
                     cout << "Error while waking up weather station! Check connection." << endl;
                     exit(2);
                 }
-                */
+                
                 
                 // IF NO ERROR THEN GET TIME FROM CONSOLE, OR READ FROM FILE. EXIT IF NO DATETIME PASSED.
                 char *dateTime = this->getDateTime(optarg);
                 
                 
-                if(write(this->fd, &dateTime, strlen(dateTime)) != strlen(dateTime))
+                if(write(this->fd, &dateTime, 6) != 6)
                 {
+                    cout << "Error while writing to serial port " << endl;
                     exit(2);
                 }
                 tcdrain(this->fd);
+                
+                char ch;
+                this->ReadNextChar(&ch);
+                if(ch != 0x06){
+                    cout << "Error ! No ACK recevied." << endl;
+                    exit(2);
+                }
+                int nCnt;
+                static char szSerBuffer[4200];
+                
+                nCnt = this->ReadToBuffer(szSerBuffer, sizeof(szSerBuffer));
+                
+                char pa2 = szSerBuffer[0];
+                char pa1 = szSerBuffer[1];
+                int number = pa2 | pa1 << 8;
+                cout << "strani " << number << endl;
+                
                 
                 break;
         }
