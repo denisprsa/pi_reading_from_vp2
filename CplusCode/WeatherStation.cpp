@@ -86,7 +86,7 @@ void WeatherStation::menu(int argc, char *argv[]){
                 }
                 tcdrain(this->fd);
                 
-                char ch;
+                char ch = 0x00;
                 this->ReadNextChar(&ch);
                 cout << ch << endl;
                 if(ch != 0x06){
