@@ -16,6 +16,7 @@
 #include <getopt.h>     // OPTIONS IN TERMINAL
 #include <vector>
 #include <ctype.h>
+#include <stdint.h>
 #include <cstdint>
 #include "WeatherStation.h"
 #include "main.h"
