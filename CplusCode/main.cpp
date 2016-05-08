@@ -14,12 +14,8 @@ int main(int argc, char *argv[])
 {
 
     WeatherStation *vp = new WeatherStation("/home/pi/.wine/dosdevices/com3");
-    //vp->OpenSerialPort();
-    //vp->WakeUpStation();
     
     vp->menu(argc, argv);
-
-
-    //cout << "NAPOVED "<< p->getYear() << endl;
+    
     return 0;
 }
