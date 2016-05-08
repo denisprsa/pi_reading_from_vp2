@@ -17,7 +17,7 @@
 #include <vector>
 #include <ctype.h>
 #include <stdint.h>
-#include <cstdint>
+#include <sstream>
 #include "WeatherStation.h"
 #include "main.h"
 
@@ -172,7 +172,9 @@ int WeatherStation::getNumberFromChar(char *_string, int &row){
         _number.push_back(_string[row+1]);
         row ++;
     } while(isdigit(_string[row+1]));
-    return stoi(_number);
+    int result;
+    stringstream(_number) >> result;
+    return result;
 }
 
 // --------------------------------------------------------
