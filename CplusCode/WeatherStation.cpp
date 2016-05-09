@@ -275,8 +275,8 @@ int WeatherStation::WakeUpStation(){
         // FROM DOC : Listen for a returned response of Line Feed and Carriage Return characters, (‘\n\r’).
         if(this->ReadNextChar(&ch))
         {
-            this->ReadNextChar(&ch)
-            // IF THERE IS RESPONSE, IT'S GONNA GE ANYWAY ‘\n\r’ SO NO NEED TO CHECK THAT
+            // IF THERE IS RESPONSE, IT'S GONNA GE  ‘\n\r’ SO NO NEED TO CLEAR '\r'
+            this->ReadNextChar(&ch);
             cout << "Weather station woke up after " << i+1 << " retries." << endl;
             return -1;
         }
