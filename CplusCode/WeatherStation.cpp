@@ -83,7 +83,7 @@ void WeatherStation::menu(int argc, char *argv[]){
                     cout << i << " " << (int)dateTime[i] << endl;
                 }
                 
-                if(write(this->fd, &dateTime, 6) != 6)
+                if(write(this->fd, dateTime, 6) != 6)
                 {
                     cout << "Error while writing to serial port " << endl;
                     exit(2);
