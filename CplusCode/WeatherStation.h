@@ -17,6 +17,7 @@ class WeatherStation{
         char *getDateTime(char *string);
         int getNumberFromChar(char *string, int &row);
         int CheckCRC(int _num, char *_data);
+        bool checkACK();
     
     public:
         WeatherStation(string path);

@@ -74,6 +74,15 @@ void WeatherStation::menu(int argc, char *argv[]){
                     cout << "Error while waking up weather station! Check connection." << endl;
                     exit(2);
                 }
+                // SEND COMMAND TO READ OUT ARHIVE DATA
+                if(write(this->fd, "DMPAFT\n", 7) != 7){
+                    cout << "Error while writing to serial port " << endl;
+                    exit(2);
+                }
+                if(!checkACK()){
+                    exit(2);
+                }
+                
                 
                 // IF NO ERROR THEN GET TIME FROM CONSOLE, OR READ FROM FILE. EXIT IF NO DATETIME PASSED.
                 const char *dateTime = this->getDateTime(optarg);
@@ -86,13 +95,10 @@ void WeatherStation::menu(int argc, char *argv[]){
                 }
                 tcdrain(this->fd);
                 
-                char ch = 0x00;
-                this->ReadNextChar(&ch);
-                cout << ch << endl;
-                if(ch != 0x06){
-                    cout << "Error ! No ACK recevied." << endl;
+                if(!checkACK()){
                     exit(2);
                 }
+                
                 int nCnt;
                 static char szSerBuffer[4200];
                 
@@ -108,7 +114,22 @@ void WeatherStation::menu(int argc, char *argv[]){
         }
     }
 }
-                          
+
+
+// --------------------------------------------------------
+// FUNCTION THAT CHECKS FOR ACK
+// --------------------------------------------------------
+bool WeatherStation::checkACK(){
+    char ch = 0x00;
+    this->ReadNextChar(&ch);
+    cout << ch << endl;
+    if(ch != 0x06){
+        cout << "Error ! No ACK recevied." << endl;
+        return false;
+    }
+    return true;
+}
+
 
 // --------------------------------------------------------
 // FUNCTION THAT GETS TIME FROM FILE OR CONSOLE
