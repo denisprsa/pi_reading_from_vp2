@@ -75,14 +75,10 @@ void WeatherStation::menu(int argc, char *argv[]){
                     exit(2);
                 }
                 
-                
                 // IF NO ERROR THEN GET TIME FROM CONSOLE, OR READ FROM FILE. EXIT IF NO DATETIME PASSED.
                 const char *dateTime = this->getDateTime(optarg);
                 
-                for(int i = 0; i<6; i++){
-                    cout << i << " " << (int)dateTime[i] << endl;
-                }
-                
+                // WRITE DATE TIME AND LOW AND HIGH BITS
                 if(write(this->fd, dateTime, 6) != 6)
                 {
                     cout << "Error while writing to serial port " << endl;
@@ -279,6 +275,7 @@ int WeatherStation::WakeUpStation(){
         // FROM DOC : Listen for a returned response of Line Feed and Carriage Return characters, (‘\n\r’).
         if(this->ReadNextChar(&ch))
         {
+            this->ReadNextChar(&ch)
             // IF THERE IS RESPONSE, IT'S GONNA GE ANYWAY ‘\n\r’ SO NO NEED TO CHECK THAT
             cout << "Weather station woke up after " << i+1 << " retries." << endl;
             return -1;
