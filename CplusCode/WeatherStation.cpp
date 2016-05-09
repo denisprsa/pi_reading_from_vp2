@@ -77,8 +77,11 @@ void WeatherStation::menu(int argc, char *argv[]){
                 
                 
                 // IF NO ERROR THEN GET TIME FROM CONSOLE, OR READ FROM FILE. EXIT IF NO DATETIME PASSED.
-                char *dateTime = this->getDateTime(optarg);
+                const unsigned char *dateTime = this->getDateTime(optarg);
                 
+                for(int i = 0; i<6; i++){
+                    cout << i << " " << dateTime[i] << endl;
+                }
                 
                 if(write(this->fd, &dateTime, 6) != 6)
                 {
@@ -114,7 +117,7 @@ void WeatherStation::menu(int argc, char *argv[]){
 // --------------------------------------------------------
 // FUNCTION THAT GETS TIME FROM FILE OR CONSOLE
 // --------------------------------------------------------
-char *WeatherStation::getDateTime(char *_string){
+unsigned char *WeatherStation::getDateTime(char *_string){
     
     // IF NO ERROR THEN GET TIME FROM CONSOLE, OR READ FROM FILE. EXIT IF NO DATETIME PASSED.
     int counter = 3;
@@ -123,7 +126,7 @@ char *WeatherStation::getDateTime(char *_string){
     int day;
     int hour;
     int minute;
-    char *datah = new char[6];
+    unsigned char *datah = new unsigned char[6];
     int16_t i;
     
     if(_string[0] == 'D' && _string[1] == ':' && _string[2] == ':'){
@@ -142,10 +145,8 @@ char *WeatherStation::getDateTime(char *_string){
             }
             counter ++;
         }
-        cout << "y " << year << " m " << month << " d " << day << " h " << hour << " i " << minute << endl;
         
         int vantageDateStamp = day + month*32 + (year-2000)*512;
-        cout << "vantageDateStamp " << vantageDateStamp<< endl;
         int vantageTimeStamp = (100*hour + minute);
         
         char b1 = (vantageDateStamp >> 8) & 0xFF;
@@ -162,10 +163,6 @@ char *WeatherStation::getDateTime(char *_string){
         i = this->CheckCRC(4, datah);
         datah[4] = HIBYTE(i);
         datah[5] = LOBYTE(i);
-        for(int i = 0; i<6; i++){
-            cout << (int)datah[i] << endl;
-        }
-        cout << "////" << endl;
         return datah;
 
     } else if (_string[0] == 'F' && _string[1] == ':' && _string[2] == ':'){
@@ -175,7 +172,7 @@ char *WeatherStation::getDateTime(char *_string){
         exit(2);
     }
     
-    return new char[1];
+    return new unsigned char[1];
 }
 
 
