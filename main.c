@@ -456,11 +456,11 @@ int main(int argc, char *argv[])
 	    else if(bVerbose)
 		    printf("Received ACK, sending time for archive ...\n");
 
-	    int day = 5;
+	    int day = 9;
 	    int month = 5;
 	    int year = 2016;
-	    int hour = 20;
-	    int minute = 45;
+	    int hour = 12;
+	    int minute = 0;
 
 	    int vantageDateStamp = day + month*32 + (year-2000)*512;
 	    int vantageTimeStamp = (100*hour + minute);
@@ -471,11 +471,11 @@ int main(int argc, char *argv[])
 	    char c1 = (vantageTimeStamp >> 8) & 0xFF;
 	    char c2 = vantageTimeStamp & 0xFF;
 	    
-	    fprintf(stderr,"b1  %d . ", (int)b1);
 	    fprintf(stderr,"b2  %d . ", (int)b2);
+	    fprintf(stderr,"b1  %d . ", (int)b1);
 	    
-	    fprintf(stderr,"c1  %d . ", (int)c1);
 	    fprintf(stderr,"c2  %d . ", (int)c2);
+	    fprintf(stderr,"c1  %d . ", (int)c1);
 
 	    static char datah[6];
 	    datah[0] = b2;

@@ -123,7 +123,7 @@ char *WeatherStation::getDateTime(char *_string){
     int day;
     int hour;
     int minute;
-    static char datah[6];
+    char *datah = new char[6];
     int16_t i;
     
     if(_string[0] == 'D' && _string[1] == ':' && _string[2] == ':'){
