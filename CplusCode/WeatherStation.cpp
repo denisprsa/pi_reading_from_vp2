@@ -97,19 +97,19 @@ void WeatherStation::menu(int argc, char *argv[]){
                 
                 char ch ;
                 this->ReadNextChar(&ch);
-                cout << "1 " << ch << endl;
+                cout << "1 " << (int)ch << endl;
                 this->ReadNextChar(&ch);
-                cout << "2 " << ch << endl;
+                cout << "2 " << (int)ch << endl;
                 this->ReadNextChar(&ch);
-                cout << "3 " << ch << endl;
+                cout << "3 " << (int)ch << endl;
                 this->ReadNextChar(&ch);
-                cout << "4 " << ch << endl;
+                cout << "4 " << (int)ch << endl;
                 this->ReadNextChar(&ch);
-                cout << "5 " << ch << endl;
+                cout << "5 " << (int)ch << endl;
                 this->ReadNextChar(&ch);
-                cout << "6 " << ch << endl;
+                cout << "6 " << (int)ch << endl;
                 this->ReadNextChar(&ch);
-                cout << "7 " << ch << endl;
+                cout << "7 " << (int)ch << endl;
                 /*
                 if(!checkACK()){
                     exit(2);
