@@ -87,6 +87,8 @@ void WeatherStation::menu(int argc, char *argv[]){
                 // IF NO ERROR THEN GET TIME FROM CONSOLE, OR READ FROM FILE. EXIT IF NO DATETIME PASSED.
                 const char *dateTime = this->getDateTime(optarg);
                 
+                
+                
                 // WRITE DATE TIME AND LOW AND HIGH BITS
                 if(write(this->fd, dateTime, 6) != 6)
                 {
@@ -113,24 +115,9 @@ void WeatherStation::menu(int argc, char *argv[]){
                 
                 
                 
-                static char ACKS[1];
-                ACKS[0] = 0x06;
-                
-                if(write(this->fd, &ACKS, strlen(ACKS) ) != strlen(ACKS)){
-                    cout << " Napakajdfjoajdi " << endl;
-                }
-                tcdrain(this->fd);
-                
-                int nCnt;
-                static char szSerBuffer[4200];
-                nCnt = ReadToBuffer(szSerBuffer, sizeof(szSerBuffer));
-                cout << "vproweather: mora biti nic " << nCnt << endl;
-                if(nCnt != 267 ){
-                    fprintf(stderr, "Napaka \n");
-                    break;
-                }
+               
 
-                /*
+                
                 if(!checkACK()){
                     exit(2);
                 }
@@ -156,7 +143,24 @@ void WeatherStation::menu(int argc, char *argv[]){
                 int number2 = za2 | za1 << 8;
                 
                 cout << "strani " << number << endl;
-                */
+                
+                static char ACKS[1];
+                ACKS[0] = 0x06;
+                
+                if(write(this->fd, &ACKS, strlen(ACKS) ) != strlen(ACKS)){
+                    cout << " Napakajdfjoajdi " << endl;
+                }
+                tcdrain(this->fd);
+                
+                int nCnt;
+                static char szSerBuffer[4200];
+                nCnt = ReadToBuffer(szSerBuffer, sizeof(szSerBuffer));
+                cout << "vproweather: mora biti nic " << nCnt << endl;
+                if(nCnt != 267 ){
+                    fprintf(stderr, "Napaka \n");
+                    break;
+                }
+                
                 
                 break;
         }
