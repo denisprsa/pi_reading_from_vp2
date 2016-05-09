@@ -471,11 +471,11 @@ int main(int argc, char *argv[])
 	    char c1 = (vantageTimeStamp >> 8) & 0xFF;
 	    char c2 = vantageTimeStamp & 0xFF;
 	    
-	    fprintf(stderr,"b2  %d . ", (int)b2);
-	    fprintf(stderr,"b1  %d . ", (int)b1);
+	    fprintf(stderr,"b2  %d . \n", (int)b2);
+	    fprintf(stderr,"b1  %d . \n", (int)b1);
 	    
-	    fprintf(stderr,"c2  %d . ", (int)c2);
-	    fprintf(stderr,"c1  %d . ", (int)c1);
+	    fprintf(stderr,"c2  %d . \n", (int)c2);
+	    fprintf(stderr,"c1  %d . \n", (int)c1);
 
 	    static char datah[6];
 	    datah[0] = b2;
@@ -483,8 +483,8 @@ int main(int argc, char *argv[])
 	    datah[2] = c2;
 	    datah[3] = c1;
 	    i = CheckCRC(4, datah);
-        fprintf(stderr,"hi  %d . ", HIBYTE(i));
-        fprintf(stderr,"lo  %d . ", LOBYTE(i));
+        fprintf(stderr,"hi  %d . \n", HIBYTE(i));
+        fprintf(stderr,"lo  %d . \n", LOBYTE(i));
 	    datah[4] = HIBYTE(i);
 	    datah[5] = LOBYTE(i);
 
