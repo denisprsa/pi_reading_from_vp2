@@ -534,9 +534,9 @@ int main(int argc, char *argv[])
 	    fprintf(stderr, "page %d \n", number);
 
 	    char za2 = szSerBuffer[2];
-        fprintf(stderr, "za2 %d \n", pa2);
+        fprintf(stderr, "za2 %d \n", za2);
 	    char za1 = szSerBuffer[3];
-        fprintf(stderr, "za1 %d \n", pa1);
+        fprintf(stderr, "za1 %d \n", za1);
 	    int number2 = za2 | za1 << 8;
 	    fprintf(stderr, "row %d \n", number2);
 

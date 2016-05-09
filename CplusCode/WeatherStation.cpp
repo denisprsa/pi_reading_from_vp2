@@ -95,6 +95,22 @@ void WeatherStation::menu(int argc, char *argv[]){
                 }
                 tcdrain(this->fd);
                 
+                char ch ;
+                this->ReadNextChar(&ch);
+                cout << "1 " << ch << endl;
+                this->ReadNextChar(&ch);
+                cout << "2 " << ch << endl;
+                this->ReadNextChar(&ch);
+                cout << "3 " << ch << endl;
+                this->ReadNextChar(&ch);
+                cout << "4 " << ch << endl;
+                this->ReadNextChar(&ch);
+                cout << "5 " << ch << endl;
+                this->ReadNextChar(&ch);
+                cout << "6 " << ch << endl;
+                this->ReadNextChar(&ch);
+                cout << "7 " << ch << endl;
+                /*
                 if(!checkACK()){
                     exit(2);
                 }
@@ -120,7 +136,7 @@ void WeatherStation::menu(int argc, char *argv[]){
                 int number2 = za2 | za1 << 8;
                 
                 cout << "strani " << number << endl;
-                
+                */
                 
                 break;
         }
