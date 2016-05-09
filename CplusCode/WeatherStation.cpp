@@ -77,10 +77,10 @@ void WeatherStation::menu(int argc, char *argv[]){
                 
                 
                 // IF NO ERROR THEN GET TIME FROM CONSOLE, OR READ FROM FILE. EXIT IF NO DATETIME PASSED.
-                const unsigned char *dateTime = this->getDateTime(optarg);
+                const char *dateTime = this->getDateTime(optarg);
                 
                 for(int i = 0; i<6; i++){
-                    cout << i << " " << dateTime[i] << endl;
+                    cout << i << " " << (int)dateTime[i] << endl;
                 }
                 
                 if(write(this->fd, &dateTime, 6) != 6)
@@ -117,7 +117,7 @@ void WeatherStation::menu(int argc, char *argv[]){
 // --------------------------------------------------------
 // FUNCTION THAT GETS TIME FROM FILE OR CONSOLE
 // --------------------------------------------------------
-unsigned char *WeatherStation::getDateTime(char *_string){
+char *WeatherStation::getDateTime(char *_string){
     
     // IF NO ERROR THEN GET TIME FROM CONSOLE, OR READ FROM FILE. EXIT IF NO DATETIME PASSED.
     int counter = 3;
@@ -126,7 +126,7 @@ unsigned char *WeatherStation::getDateTime(char *_string){
     int day;
     int hour;
     int minute;
-    unsigned char *datah = new unsigned char[6];
+    char *datah = new char[6];
     int16_t i;
     
     if(_string[0] == 'D' && _string[1] == ':' && _string[2] == ':'){
@@ -172,7 +172,7 @@ unsigned char *WeatherStation::getDateTime(char *_string){
         exit(2);
     }
     
-    return new unsigned char[1];
+    return new char[1];
 }
 
 

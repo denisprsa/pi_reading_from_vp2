@@ -14,7 +14,7 @@ class WeatherStation{
         int yDelay;
     
         // PRIVATE FUNCTIONS
-        unsigned char *getDateTime(char *string);
+        char *getDateTime(char *string);
         int getNumberFromChar(char *string, int &row);
         int CheckCRC(int _num, char *_data);
     
