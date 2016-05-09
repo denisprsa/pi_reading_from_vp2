@@ -18,6 +18,7 @@
 #include <ctype.h>
 #include <stdint.h>
 #include <sstream>
+#include <complex>
 #include "WeatherStation.h"
 #include "main.h"
 
