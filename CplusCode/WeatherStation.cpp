@@ -132,9 +132,9 @@ char *WeatherStation::getDateTime(char *_string){
             if(_string[counter] == 'y'){
                 year = this->getNumberFromChar(_string, counter);
             } else if (optarg[counter] == 'm'){
-                day = this->getNumberFromChar(_string, counter);
-            } else if (optarg[counter] == 'd'){
                 month = this->getNumberFromChar(_string, counter);
+            } else if (optarg[counter] == 'd'){
+                day = this->getNumberFromChar(_string, counter);
             } else if (optarg[counter] == 'h'){
                 hour = this->getNumberFromChar(_string, counter);
             } else if (optarg[counter] == 'i'){
