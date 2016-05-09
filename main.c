@@ -464,6 +464,7 @@ int main(int argc, char *argv[])
 
 	    int vantageDateStamp = day + month*32 + (year-2000)*512;
 	    int vantageTimeStamp = (100*hour + minute);
+        fprintf(stderr,"vantageDateStamp  %d . \n", (int)vantageDateStamp);
 
 	    char b1 = (vantageDateStamp >> 8) & 0xFF;
 	    char b2 = vantageDateStamp & 0xFF;
