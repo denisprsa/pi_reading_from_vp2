@@ -525,12 +525,18 @@ int main(int argc, char *argv[])
 
 	    
 	    char pa2 = szSerBuffer[0];
+        
+        fprintf(stderr, "pa2 %d \n", pa2);
 	    char pa1 = szSerBuffer[1];
+        
+        fprintf(stderr, "pa1 %d \n", pa1);
 	    int number = pa2 | pa1 << 8;
 	    fprintf(stderr, "page %d \n", number);
 
 	    char za2 = szSerBuffer[2];
+        fprintf(stderr, "za2 %d \n", pa2);
 	    char za1 = szSerBuffer[3];
+        fprintf(stderr, "za1 %d \n", pa1);
 	    int number2 = za2 | za1 << 8;
 	    fprintf(stderr, "row %d \n", number2);
 

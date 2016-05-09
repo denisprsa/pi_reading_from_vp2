@@ -106,12 +106,19 @@ void WeatherStation::menu(int argc, char *argv[]){
                 cout << "Dobljenih paketov: " << nCnt << endl;
                 
                 if((nCnt = this->CheckCRC(6, szSerBuffer))) {
-                    cout << "crc koda : " << nCnt << endl; 
+                    cout << "crc koda : " << nCnt << endl;
                 }
                 
                 char pa2 = szSerBuffer[0];
                 char pa1 = szSerBuffer[1];
+                cout << " pa1 " << (int)pa1 << " pa2 " << (int)pa2 << endl;
                 int number = pa2 | pa1 << 8;
+                
+                char za2 = szSerBuffer[2];
+                char za1 = szSerBuffer[3];
+                cout << " za1 " << (int)pa1 << " za2 " << (int)za2 << endl;
+                int number2 = za2 | za1 << 8;
+                
                 cout << "strani " << number << endl;
                 
                 
