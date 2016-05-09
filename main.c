@@ -595,7 +595,7 @@ int main(int argc, char *argv[])
     GetParms
     Reads command line parameters.
 ----------------------------------------------------------------------------*/
-int GetParms(d)
+int GetParms(int argc, char *argv[])
 {
     extern char *optarg;
     extern int optind, opterr, optopt;

@@ -123,7 +123,7 @@ char *WeatherStation::getDateTime(char *_string){
     int day;
     int hour;
     int minute;
-    char *datah = new char[6];
+    static char datah[6];
     int16_t i;
     
     if(_string[0] == 'D' && _string[1] == ':' && _string[2] == ':'){
@@ -193,6 +193,7 @@ int WeatherStation::getNumberFromChar(char *_string, int &row){
         _number.push_back(_string[row+1]);
         row ++;
     } while(isdigit(_string[row+1]));
+    
     int result;
     stringstream(_number) >> result;
     return result;
