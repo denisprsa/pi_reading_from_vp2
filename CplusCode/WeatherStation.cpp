@@ -103,6 +103,11 @@ void WeatherStation::menu(int argc, char *argv[]){
                 static char szSerBuffer[4200];
                 
                 nCnt = this->ReadToBuffer(szSerBuffer, sizeof(szSerBuffer));
+                cout << "Dobljenih paketov: " << nCnt << endl;
+                
+                if((nCnt = this->CheckCRC(6, szSerBuffer))) {
+                    cout << "crc koda : " << nCnt << endl; 
+                }
                 
                 char pa2 = szSerBuffer[0];
                 char pa1 = szSerBuffer[1];
