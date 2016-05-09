@@ -110,6 +110,26 @@ void WeatherStation::menu(int argc, char *argv[]){
                 cout << "6 " << (int)ch << endl;
                 this->ReadNextChar(&ch);
                 cout << "7 " << (int)ch << endl;
+                
+                
+                
+                static char ACKS[1];
+                ACKS[0] = 0x06;
+                
+                if(write(this->fd, &ACKS, strlen(ACKS) ) != strlen(ACKS)){
+                    cout << " Napakajdfjoajdi " << endl;
+                }
+                tcdrain(this->fd);
+                
+                int nCnt;
+                static char szSerBuffer[4200];
+                nCnt = ReadToBuffer(szSerBuffer, sizeof(szSerBuffer));
+                cout << "vproweather: mora biti nic " << nCnt << endl;
+                if(nCnt != 267 ){
+                    fprintf(stderr, "Napaka \n");
+                    break;
+                }
+
                 /*
                 if(!checkACK()){
                     exit(2);
