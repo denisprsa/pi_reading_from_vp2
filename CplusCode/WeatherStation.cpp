@@ -191,6 +191,7 @@ bool WeatherStation::ReadRowFromWeatherStation(ARDATA_t &data, char *buffer){
             memcpy ( &buffer[from], &data[data.size()-1], 52 );
         }
     }
+    return true;
 }
 
 
