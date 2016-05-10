@@ -391,7 +391,7 @@ typedef struct t_HLDATA
 } PACKED HLDATA;
 
 
-typedef struct t_ARDATA
+typedef struct _ARDATA
 {
     uint8_t unused;           /* 0 u                         */
 

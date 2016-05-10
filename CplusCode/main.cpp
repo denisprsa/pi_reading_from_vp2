@@ -7,6 +7,7 @@
 #include <string>
 
 #include "WeatherStation.h"
+#include "ArchiveStruct.h"
 
 using namespace std;
 

@@ -456,7 +456,7 @@ int main(int argc, char *argv[])
 	    else if(bVerbose)
 		    printf("Received ACK, sending time for archive ...\n");
 
-	    int day = 9;
+	    int day = 10;
 	    int month = 5;
 	    int year = 2016;
 	    int hour = 12;
@@ -521,7 +521,6 @@ int main(int argc, char *argv[])
 	    if((nCnt = CheckCRC(6, szSerBuffer))) {
 		    fprintf(stderr, "crc koda za prejem strani:  %d  \n", nCnt);
 	    }
-
 
 	    
 	    char pa2 = szSerBuffer[0];

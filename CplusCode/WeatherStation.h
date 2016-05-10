@@ -1,8 +1,17 @@
+//
+//  WeatherStation.h
+//
+//
+//  Created by Denis Prša on 05. 05. 16.
+//
+//
+
 #ifndef WEATHERSTATION_H
 #define WEATHERSTATION_H
 
 #include <string.h>
 #include <termios.h>
+#include "ArchiveStruct.h"
 using namespace std;
 
 class WeatherStation{
@@ -18,6 +27,7 @@ class WeatherStation{
         int getNumberFromChar(char *string, int &row);
         int CheckCRC(int _num, char *_data);
         bool checkACK();
+        bool ReadRowFromWeatherStation(ARDATA_t &data, char *buffer);
     
     public:
         WeatherStation(string path);
@@ -25,7 +35,7 @@ class WeatherStation{
         int WakeUpStation();
         int ReadNextChar(char *pChar);
         int ReadToBuffer( char *pszBuffer, int nBufSize);
-
+    
     
         void menu(int argc, char *argv[]);
         void showMenu();

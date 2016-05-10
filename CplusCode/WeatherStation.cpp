@@ -19,6 +19,8 @@
 #include <stdint.h>
 #include <sstream>
 #include <complex>
+#include <vector>
+#include "ArchiveStruct.h"
 #include "WeatherStation.h"
 #include "main.h"
 
@@ -97,64 +99,74 @@ void WeatherStation::menu(int argc, char *argv[]){
                 }
                 tcdrain(this->fd);
                 
-                char ch ;
-                this->ReadNextChar(&ch);
-                cout << "1 " << (int)ch << endl;
-                this->ReadNextChar(&ch);
-                cout << "2 " << (int)ch << endl;
-                this->ReadNextChar(&ch);
-                cout << "3 " << (int)ch << endl;
-                this->ReadNextChar(&ch);
-                cout << "4 " << (int)ch << endl;
-                this->ReadNextChar(&ch);
-                cout << "5 " << (int)ch << endl;
-                this->ReadNextChar(&ch);
-                cout << "6 " << (int)ch << endl;
-                this->ReadNextChar(&ch);
-                cout << "7 " << (int)ch << endl;
-                
-                
-                
-               
-
-                
+                // RESPONSE ACK THAT WAS RECIVED DATE AND TIME
                 if(!checkACK()){
                     exit(2);
                 }
                 
-                int nCnt;
-                static char szSerBuffer[4200];
+                int num_pack;
+                char SerBuffer[4200];
                 
-                nCnt = this->ReadToBuffer(szSerBuffer, sizeof(szSerBuffer));
-                cout << "Dobljenih paketov: " << nCnt << endl;
+                num_pack = this->ReadToBuffer(SerBuffer, sizeof(SerBuffer));
+                cout << "Recived packets: " << num_pack << endl;
                 
-                if((nCnt = this->CheckCRC(6, szSerBuffer))) {
-                    cout << "crc koda : " << nCnt << endl;
+                if((num_pack = this->CheckCRC(6, SerBuffer))) {
+                    cout << "Error! CRC code : " << num_pack << endl;
                 }
+                // GET WHAT PAGES FOR THIS DATE AND WHAT ROW IN PAGE CONTAINS THAT DATE
+                int pages = zSerBuffer[0] | szSerBuffer[1] << 8;
+                int row = szSerBuffer[2] | szSerBuffer[3] << 8;
                 
-                char pa2 = szSerBuffer[0];
-                char pa1 = szSerBuffer[1];
-                cout << " pa1 " << (int)pa1 << " pa2 " << (int)pa2 << endl;
-                int number = pa2 | pa1 << 8;
+                cout << "Pages: " << pages << " Row: "<< row << endl;
                 
-                char za2 = szSerBuffer[2];
-                char za1 = szSerBuffer[3];
-                cout << " za1 " << (int)pa1 << " za2 " << (int)za2 << endl;
-                int number2 = za2 | za1 << 8;
+                bool date_is_smaller = true;
+                bool first_time = true;
                 
-                cout << "strani " << number << endl;
+                // ACTUAL DATA (NOT PROCESSED)
+                vector<ARDATA_t> vec_data;
                 
-                static char ACKS[1];
-                ACKS[0] = 0x06;
-                
-                if(write(this->fd, &ACKS, strlen(ACKS) ) != strlen(ACKS)){
-                    cout << " Napakajdfjoajdi " << endl;
+                while (date_is_smaller){
+                    // SEND ACK TO RECIVE NEXT PAGE
+                    static char ACKS[1];
+                    ACKS[0] = 0x06;
+                    
+                    if(write(this->fd, &ACKS, strlen(ACKS) ) != strlen(ACKS)){
+                        cout << "Error while sending ACK to serial port." << endl;
+                    }
+                    tcdrain(this->fd);
+                    
+                    // READ PAGES FROM SERIAL PORT
+                    
+                    num_pack = ReadToBuffer(SerBuffer, sizeof(SerBuffer));
+                    cout << "Received packets was: " << num_pack << endl;
+                    if( num_pack != 267 ){
+                        cout << "Number of packets was incorrect (pages)!" << endl;
+                        cout << "Trying once again ..." << endl;
+                        
+                        // TODO ::::
+                        
+                    } else {
+                        // CHECK FOR CRC
+                        if((num_pack = this->CheckCRC(267, SerBuffer))) {
+                            cout << "Error! CRC code : " << num_pack << endl;
+                            cout << "Trying once again ..." << endl;
+                            
+                            // TODO ::::
+                        }
+                        
+                        // IF FIRST TIME CHECK WHAT ROW IN PAGE CONTAINS ACCURATE DATEITME
+                        if( first_time ){
+                            this->ReadRowFromWeatherStation(vec_data, SerBuffer);
+                            cout << "DATE " << vec_data[0].date << endl;
+                            
+                            break;
+                        } else {
+                            
+                        }
+                    }
+                    
+                    
                 }
-                tcdrain(this->fd);
-                
-                int nCnt;
-                static char szSerBuffer[4200];
-                nCnt = ReadToBuffer(szSerBuffer, sizeof(szSerBuffer));
                 cout << "vproweather: mora biti nic " << nCnt << endl;
                 if(nCnt != 267 ){
                     fprintf(stderr, "Napaka \n");
@@ -166,6 +178,21 @@ void WeatherStation::menu(int argc, char *argv[]){
         }
     }
 }
+
+
+// --------------------------------------------------------
+// FUNCTION THAT CHECKS FOR ACK
+// --------------------------------------------------------
+bool WeatherStation::ReadRowFromWeatherStation(ARDATA_t &data, char *buffer){
+    int from = 1;
+    for(int i = 0; i < 5; i++){
+        if(i >= row){
+            data.push_back( ARDATA_t() );
+            memcpy ( &buffer[from], &data[data.size()-1], 52 );
+        }
+    }
+}
+
 
 
 // --------------------------------------------------------
