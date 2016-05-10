@@ -114,8 +114,8 @@ void WeatherStation::menu(int argc, char *argv[]){
                     cout << "Error! CRC code : " << num_pack << endl;
                 }
                 // GET WHAT PAGES FOR THIS DATE AND WHAT ROW IN PAGE CONTAINS THAT DATE
-                int pages = zSerBuffer[0] | szSerBuffer[1] << 8;
-                int row = szSerBuffer[2] | szSerBuffer[3] << 8;
+                int pages = SerBuffer[0] | SerBuffer[1] << 8;
+                int row = SerBuffer[2] | SerBuffer[3] << 8;
                 
                 cout << "Pages: " << pages << " Row: "<< row << endl;
                 
