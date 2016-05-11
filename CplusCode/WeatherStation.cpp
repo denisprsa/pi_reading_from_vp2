@@ -184,7 +184,7 @@ bool WeatherStation::ReadRowFromWeatherStation(vector<ARDATA_c_t> &data_converte
         if(i >= row){
             ARDATA_b_t data;
             memcpy( &data, buffer + from, sizeof( ARDATA_b_t ));
-            cout << data.date << " " << data.date << endl;
+            cout << data.date << " " << data.time << endl;
             from += 52;
         }
     }
