@@ -200,9 +200,9 @@ ARDATA_c_t WeatherStation::ConvertToHumanData(ARDATA_b_t data){
     uint16_t  mask;
     mask = (1 << 7) - 1;
     int year = data.date & mask;
-    mask = ((1 << 4) - 1) << 7;
+    mask = ((1 << 4) - 1) << 8;
     int month = data.date & mask;
-    mask = ((1 << 5) - 1) << 11;
+    mask = ((1 << 5) - 1) << 12;
     int day = data.date & mask;
     
     //CONVERT TIME
