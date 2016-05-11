@@ -239,12 +239,28 @@ ARDATA_c_t WeatherStation::ConvertToHumanData(ARDATA_b_t data){
     output_data.hour = data.time/100;
     output_data.minutes = data.time - ((data.time/100) * 100);
     
+    // OUTSIDE TEMP (C)
+    output_data.outside = ((data.outside / 10.0) - 32 ) * 5/9;
+    // OUTSIDE TEMP HIGH (C)
+    output_data.hightOut = ((data.hightOut / 10.0) - 32 ) * 5/9;
+    // OUTSIDE TEMP LOW (C)
+    output_data.lowOut = ((data.lowOut / 10.0) - 32 ) * 5/9;
+    // RAIN ACC (mm)
+    output_data.rainfall = data.rainfall * 0.2;
+    // HIGHRAINFALL IN THAT TIME (mm)
+    output_data.rainfall = data.highRainFall * 0.2;
+    // BAROMETER (mbar)
+    output_data.barometer = (data.barometer / 1000)* 33.8638815;
+    // SOLAR (W)
+    
+    // NUMBER OF WIND SAMPLES
     
     
     
     
     string datetime_k = SSTR(output_data.day) + "." + SSTR(output_data.month) + "." +
-                        SSTR(output_data.year) + " " + SSTR(output_data.hour) + ":" + SSTR(output_data.minutes);
+                        SSTR(output_data.year) + " " + SSTR(output_data.hour) + ":" +
+                        SSTR(output_data.minutes) + " T: " + SSTR(output_data.outside);
     
     // RETURN
     cout << datetime_k << endl;

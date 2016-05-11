@@ -29,6 +29,9 @@ struct ARDATA_b_t
     uint16_t inside;
     uint8_t insideH;
     uint8_t outsideH;
+    uint8_t avgWindSpeed;
+    uint8_t highWindSpeed;
+    uint8_t direcHighWindSpeed;
 };
 
 // STRUCT FOR ACTUAL DATA (CONVERTED FROM NUMBERS)
