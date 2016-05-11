@@ -14,7 +14,7 @@
 using namespace std;
 
 // STRUCT FOR COPYING FROM BUFFER
-typedef struct ARDATA_b_t
+struct ARDATA_b_t
 {
     uint16_t date;
     uint16_t time;
@@ -32,7 +32,7 @@ typedef struct ARDATA_b_t
 };
 
 // STRUCT FOR ACTUAL DATA (CONVERTED FROM NUMBERS)
-typedef struct ARDATA_c_t
+struct ARDATA_c_t
 {
     string datetime;
     double outside;
