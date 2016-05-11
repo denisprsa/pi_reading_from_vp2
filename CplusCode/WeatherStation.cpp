@@ -240,7 +240,7 @@ ARDATA_c_t WeatherStation::ConvertToHumanData(ARDATA_b_t data){
     
     
     string datetime_k = SSTR(output_data.day) + "." + SSTR(output_data.month) + "." +
-                        SSTR(output_data.year) + " " + SSTR(output_data.hours) + ":" + SSTR(output_data.minutes);
+                        SSTR(output_data.year) + " " + SSTR(output_data.hour) + ":" + SSTR(output_data.minutes);
     
     // RETURN
     cout << datetime_k << endl;
