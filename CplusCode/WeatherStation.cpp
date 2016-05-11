@@ -160,8 +160,9 @@ void WeatherStation::menu(int argc, char *argv[]){
                             for(int k = 0; k < 267 ; k++){
                                 cout << (int)SerBuffer[k] << " " ;
                             }
-                            /*
+                            
                             this->ReadRowFromWeatherStation(vec_data, SerBuffer, row);
+                            /*
                             cout << "size " << vec_data.size() << endl;
                             cout << "DATE " << vec_data[0].date << endl;
                             cout << "DATE1 " << vec_data[0].time << endl;
