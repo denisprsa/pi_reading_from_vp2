@@ -34,7 +34,11 @@ struct ARDATA_b_t
 // STRUCT FOR ACTUAL DATA (CONVERTED FROM NUMBERS)
 struct ARDATA_c_t
 {
-    string datetime;
+    int day;
+    int month;
+    int year;
+    int hour;
+    int minutes;
     double outside;
     double hightOut;
     double lowOut;

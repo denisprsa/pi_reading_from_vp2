@@ -157,13 +157,13 @@ void WeatherStation::menu(int argc, char *argv[]){
                         // IF FIRST TIME CHECK WHAT ROW IN PAGE CONTAINS ACCURATE DATEITME
                         if( first_time ){
                             // COPY BUFFER TO STRUCT
-                            if(this->ReadRowFromWeatherStation(vec_data, SerBuffer, row)){
+                            if(this->ReadRowFromWeatherStation(vec_data, SerBuffer, row))
                                 break;
-                            }
+                            
                             first_time = false;
                         } else {
-                            this->ReadRowFromWeatherStation(vec_data, SerBuffer, 0);
-                            break;
+                            if(this->ReadRowFromWeatherStation(vec_data, SerBuffer, 0))
+                                break;
                         }
                     }
                     
@@ -186,13 +186,35 @@ bool WeatherStation::ReadRowFromWeatherStation(vector<ARDATA_c_t> &data_converte
             ARDATA_b_t data;
             memcpy( &data, buffer + from, sizeof( ARDATA_b_t ));
             cout << data.date << " " << data.time << endl;
-            data_converted.push_back( this->ConvertToHumanData(data) );
+            ARDATA_c_t data_c = this->ConvertToHumanData(data);
+            
+            // IF DATE SMALLER FROM CURRENT READED DATA, THEN RETURN END OF DATA READING
+            int size_data = data_converted.size();
+            if(size_data > 0){
+                if(data_c.year < data_converted[data_converted.size()-1].year ||
+                   data_c.month < data_converted[data_converted.size()-1].month ||
+                   data_c.day < data_converted[data_converted.size()-1].day){
+                    return true;
+                } else {
+                    // CHECK IF TIME SMALLER
+                    if( data_c.hour < data_converted[data_converted.size()-1].hour ){
+                        return true;
+                    }
+                    if( data_c.minutes < data_converted[data_converted.size()-1].minutes )
+                        return true;
+                }
+            }
             from += 52;
         }
     }
     return false;
 }
 
+
+
+// --------------------------------------------------------
+// FUNCTION THAT CHECKS FOR ACK
+// --------------------------------------------------------
 ARDATA_c_t WeatherStation::ConvertToHumanData(ARDATA_b_t data){
     ARDATA_c_t output_data;
     
@@ -200,23 +222,27 @@ ARDATA_c_t WeatherStation::ConvertToHumanData(ARDATA_b_t data){
     uint16_t  mask;
     mask = ((1 << 7) - 1) << 9;
     int year = data.date & mask;
-    year =  (year / 512 ) + 2000;
+    output_data.year =  (year / 512 ) + 2000;
     
     mask = ((1 << 4) - 1) << 5;
     int month = data.date & mask;
-    month /= 32;
+    output_data.month = month / 32;
     
     mask = (1 << 5) - 1;
-    int day = data.date & mask;
+    output_data.day = data.date & mask;
     
     //CONVERT TIME
-    int hours = data.time/100;
-    int minutes = data.time - ((data.time/100) * 100);
+    output_data.hour = data.time/100;
+    output_data.minutes = data.time - ((data.time/100) * 100);
     
-    output_data.datetime = SSTR(day) + "." + SSTR(month) + "." + SSTR(year) + " " + SSTR(hours) + ":" + SSTR(minutes);
+    
+    
+    
+    
+    string datetime_k = SSTR(day) + "." + SSTR(month) + "." + SSTR(year) + " " + SSTR(hours) + ":" + SSTR(minutes);
     
     // RETURN
-    cout << output_data.datetime << endl;
+    cout << datetime_k << endl;
     return output_data;
 }
 
