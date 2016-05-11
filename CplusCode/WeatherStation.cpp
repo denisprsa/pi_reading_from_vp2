@@ -200,18 +200,20 @@ ARDATA_c_t WeatherStation::ConvertToHumanData(ARDATA_b_t data){
     uint16_t  mask;
     mask = ((1 << 7) - 1) << 9;
     int year = data.date & mask;
-    year /= 512;
-    year += 2000;
+    year =  (year / 512 ) + 2000;
+    
     mask = ((1 << 4) - 1) << 5;
     int month = data.date & mask;
     month /= 32;
+    
     mask = (1 << 5) - 1;
     int day = data.date & mask;
     
     //CONVERT TIME
+    int hours = data.time/100;
+    int minutes = data.time - ((data.time/100) * 100);
     
-    output_data.datetime = SSTR(day) + "." + SSTR(month) + "." + SSTR(year);
-    
+    output_data.datetime = SSTR(day) + "." + SSTR(month) + "." + SSTR(year) + " " + SSTR(hours) + ":" + SSTR(minutes);
     
     // RETURN
     cout << output_data.datetime << endl;
