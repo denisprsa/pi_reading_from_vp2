@@ -12,6 +12,10 @@
 #include <string.h>
 #include <termios.h>
 #include "ArchiveStruct.h"
+#include <sstream>
+
+#define SSTR( x ) static_cast< std::ostringstream & >( ( std::ostringstream() << std::dec << x ) ).str()
+
 using namespace std;
 
 class WeatherStation{
