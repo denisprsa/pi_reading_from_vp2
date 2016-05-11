@@ -27,7 +27,7 @@ class WeatherStation{
         int getNumberFromChar(char *string, int &row);
         int CheckCRC(int _num, char *_data);
         bool checkACK();
-        bool ReadRowFromWeatherStation(vectord<ARDATA_t> &data, char *buffer);
+        bool ReadRowFromWeatherStation(vector<ARDATA_t> &data, char *buffer);
     
     public:
         WeatherStation(string path);

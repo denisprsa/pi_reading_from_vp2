@@ -176,7 +176,7 @@ void WeatherStation::menu(int argc, char *argv[]){
 // --------------------------------------------------------
 // FUNCTION THAT CHECKS FOR ACK
 // --------------------------------------------------------
-bool WeatherStation::ReadRowFromWeatherStation(vectord<ARDATA_t> &data, char *buffer){
+bool WeatherStation::ReadRowFromWeatherStation(vector<ARDATA_t> &data, char *buffer){
     int from = 1;
     for(int i = 0; i < 5; i++){
         if(i >= row){
