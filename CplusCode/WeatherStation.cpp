@@ -187,13 +187,13 @@ void WeatherStation::menu(int argc, char *argv[]){
 // --------------------------------------------------------
 bool WeatherStation::ReadRowFromWeatherStation(vector<ARDATA_t> &data, char *buffer, int row){
     int from = 1;
-    for(int i = 0; i < 5; i++){
-        if(i >= row){
+    //for(int i = 0; i < 5; i++){
+        //if(i >= row){
             data.push_back( ARDATA_t() );
-            memcpy ( &buffer, &data[data.size()-1], 52 );
+            memcpy( &data[data.size()-1], buffer, sizeof( ARDATA_t ) );
             from += 52;
-        }
-    }
+        //}
+    //}
     return true;
 }
 
