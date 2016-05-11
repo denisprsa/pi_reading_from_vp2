@@ -123,7 +123,7 @@ void WeatherStation::menu(int argc, char *argv[]){
                 bool first_time = true;
                 
                 // ACTUAL DATA (NOT PROCESSED)
-                vector<ARDATA_t> vec_data;
+                vector<ARDATA_c_t> vec_data;
                 
                 while (date_is_smaller){
                     // SEND ACK TO RECIVE NEXT PAGE
@@ -156,22 +156,14 @@ void WeatherStation::menu(int argc, char *argv[]){
                         
                         // IF FIRST TIME CHECK WHAT ROW IN PAGE CONTAINS ACCURATE DATEITME
                         if( first_time ){
-                            
-                            for(int k = 0; k < 267 ; k++){
-                                cout << (int)SerBuffer[k] << " " ;
+                            // COPY BUFFER TO STRUCT
+                            if(this->ReadRowFromWeatherStation(vec_data, SerBuffer, row)){
+                                break;
                             }
-                            
-                            this->ReadRowFromWeatherStation(vec_data, SerBuffer, row);
-                            
-                            cout << "size " << vec_data.size() << endl;
-                            cout << "DATE " << vec_data[0].date << " " << vec_data[0].time << endl;
-                            cout << "DATE1 " << vec_data[1].date << " " << vec_data[1].time << endl;
-                            cout << "DATE2 " << vec_data[2].date << " " << vec_data[2].time << endl;
-                            cout << "DATE3 " << vec_data[3].date << " " << vec_data[3].time << endl;
-                            cout << "DATE4 " << vec_data[4].date << " " << vec_data[4].time << endl;
-                            break;
+                            first_time = false;
                         } else {
-                            
+                            this->ReadRowFromWeatherStation(vec_data, SerBuffer, 0);
+                            break;
                         }
                     }
                     
@@ -186,16 +178,17 @@ void WeatherStation::menu(int argc, char *argv[]){
 // --------------------------------------------------------
 // FUNCTION THAT CHECKS FOR ACK
 // --------------------------------------------------------
-bool WeatherStation::ReadRowFromWeatherStation(vector<ARDATA_t> &data, char *buffer, int row){
+bool WeatherStation::ReadRowFromWeatherStation(vector<ARDATA_c_t> &data_converted, char *buffer, int row){
     int from = 1;
     for(int i = 0; i < 5; i++){
         if(i >= row){
-            data.push_back( ARDATA_t() );
-            memcpy( &data[data.size()-1], buffer + from, sizeof( ARDATA_t ) );
+            ARDATA_b_t data
+            memcpy( &data, buffer + from, sizeof( ARDATA_b_t ));
+            cout << data.date << " " << data.date << endl;
             from += 52;
         }
     }
-    return true;
+    return false;
 }
 
 

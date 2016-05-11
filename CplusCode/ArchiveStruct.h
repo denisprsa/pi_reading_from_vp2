@@ -9,8 +9,12 @@
 #ifndef ArchiveStruct_h
 #define ArchiveStruct_h
 
-// STRUCT
-typedef struct ARDATA_t
+#include <string.h>
+
+using namespace std;
+
+// STRUCT FOR COPYING FROM BUFFER
+typedef struct ARDATA_b_t
 {
     uint16_t date;
     uint16_t time;
@@ -25,6 +29,22 @@ typedef struct ARDATA_t
     uint16_t inside;
     uint8_t insideH;
     uint8_t outsideH;
-} ARDATA;
+};
+
+// STRUCT FOR ACTUAL DATA (CONVERTED FROM NUMBERS)
+typedef struct ARDATA_c_t
+{
+    string datetime;
+    double outside;
+    double hightOut;
+    double lowOut;
+    double rainfall;
+    double highRainFall;
+    double barometer;
+    double numwisa;
+    double inside;
+    double insideH;
+    double outsideH;
+};
 
 #endif /* ArchiveStruct_h */
