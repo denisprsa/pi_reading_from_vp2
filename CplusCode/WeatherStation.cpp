@@ -180,15 +180,39 @@ void WeatherStation::menu(int argc, char *argv[]){
 // --------------------------------------------------------
 bool WeatherStation::ReadRowFromWeatherStation(vector<ARDATA_c_t> &data_converted, char *buffer, int row){
     int from = 1;
+    
     for(int i = 0; i < 5; i++){
         if(i >= row){
             ARDATA_b_t data;
             memcpy( &data, buffer + from, sizeof( ARDATA_b_t ));
             cout << data.date << " " << data.time << endl;
+            data_converted.push_back( this->ConvertToHumanData(data) );
             from += 52;
         }
     }
     return false;
+}
+
+ARDATA_c_t WeatherStation::ConvertToHumanData(ARDATA_b_t data){
+    ARDATA_c_t output_data;
+    
+    // CONVERT DATE
+    uint16_t  mask;
+    mask = (1 << 7) - 1;
+    int day = data.date & mask;
+    mask = ((1 << 7) - 1) << 9;
+    int month = data.date & mask;
+    mask = ((1 << 7) - 1) << 10;
+    int year = data.date & mask;
+    
+    //CONVERT TIME
+    
+    output_data.datetime = to_string(day) + "." + to_string(month) + "." + to_string(year);
+    
+    
+    // RETURN
+    cout << output_data.datetime << endl;
+    return output_data;
 }
 
 

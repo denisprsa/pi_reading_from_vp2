@@ -28,6 +28,7 @@ class WeatherStation{
         int CheckCRC(int _num, char *_data);
         bool checkACK();
         bool ReadRowFromWeatherStation(vector<ARDATA_c_t> &data, char *buffer, int row);
+        ARDATA_c_t ConvertToHumanData(ARDATA_b_t data);
     
     public:
         WeatherStation(string path);
