@@ -185,12 +185,16 @@ bool WeatherStation::ReadRowFromWeatherStation(vector<ARDATA_c_t> &data_converte
         if(i >= row){
             ARDATA_b_t data;
             memcpy( &data, buffer + from, sizeof( ARDATA_b_t ));
-            cout << data.date << " " << data.time << endl;
+            // OUT OF DATA
+            if(data.date == 0xFFFF)
+                return true;
+            
             ARDATA_c_t data_c = this->ConvertToHumanData(data);
             
             // IF DATE SMALLER FROM CURRENT READED DATA, THEN RETURN END OF DATA READING
             int size_data = data_converted.size();
             if(size_data > 0){
+                
                 if(data_c.year < data_converted[data_converted.size()-1].year ||
                    data_c.month < data_converted[data_converted.size()-1].month ||
                    data_c.day < data_converted[data_converted.size()-1].day){
