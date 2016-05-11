@@ -156,8 +156,14 @@ void WeatherStation::menu(int argc, char *argv[]){
                         
                         // IF FIRST TIME CHECK WHAT ROW IN PAGE CONTAINS ACCURATE DATEITME
                         if( first_time ){
+                            for(int i = 0; i < 276 ; i++){
+                                cout << (int)SerBuffer[i] << " " ;
+                            }
                             this->ReadRowFromWeatherStation(vec_data, SerBuffer, row);
+                            cout << "size " << vec_data.size() << endl;
                             cout << "DATE " << vec_data[0].date << endl;
+                            cout << "DATE1 " << vec_data[0].time << endl;
+                            cout << "DATE2 " << vec_data[0].outside << endl;
                             
                             break;
                         } else {
