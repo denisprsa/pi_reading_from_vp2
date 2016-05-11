@@ -156,7 +156,7 @@ void WeatherStation::menu(int argc, char *argv[]){
                         
                         // IF FIRST TIME CHECK WHAT ROW IN PAGE CONTAINS ACCURATE DATEITME
                         if( first_time ){
-                            this->ReadRowFromWeatherStation(vec_data, SerBuffer);
+                            this->ReadRowFromWeatherStation(vec_data, &SerBuffer);
                             cout << "DATE " << vec_data[0].date << endl;
                             
                             break;
@@ -167,14 +167,7 @@ void WeatherStation::menu(int argc, char *argv[]){
                     
                     
                 }
-                cout << "vproweather: mora biti nic " << nCnt << endl;
-                if(nCnt != 267 ){
-                    fprintf(stderr, "Napaka \n");
-                    break;
-                }
                 
-                
-                break;
         }
     }
 }
@@ -183,7 +176,7 @@ void WeatherStation::menu(int argc, char *argv[]){
 // --------------------------------------------------------
 // FUNCTION THAT CHECKS FOR ACK
 // --------------------------------------------------------
-bool WeatherStation::ReadRowFromWeatherStation(ARDATA_t &data, char *buffer){
+bool WeatherStation::ReadRowFromWeatherStation(vector<ARDATA_t> &data, char *buffer){
     int from = 1;
     for(int i = 0; i < 5; i++){
         if(i >= row){
