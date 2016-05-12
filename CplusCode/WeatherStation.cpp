@@ -263,10 +263,10 @@ string WeatherStation::PrepareDataOut(ARDATA_c_t data){
     // HUMIDITY OUTSIDE
     data_out += to_string(floor(data.outsideH * 100.0) / 10.0) + ",";
     // DEWPOINT
-    double v = data.outsideH * 0.01 * 6.112 * exp( (17.62*data.outside)/(data.outside + 243.12) );
-    double numerator = 243.12*(log(v) / log(2.718281828459045235) ) – 440.1;
-    double denominator = 19.43 – (log(v) / log(2.718281828459045235));
-    data_out += to_string(floor(numerator / denominator) / 10.0) + ",";
+    double v = data.outsideH*0.01*6.112*exp((17.62*data.outside)/(data.outside+243.12));
+    double numerator = 243.12*(log(v)/log(2.718281828459045235) )-440.1;
+    double denominator = 19.43-(log(v)/log(2.718281828459045235));
+    data_out += to_string(floor(numerator/denominator) / 10.0) + ",";
     // BAROMETER
     data_out += to_string(data.barometer) + ",";
     // WINDSPEED HIGH
