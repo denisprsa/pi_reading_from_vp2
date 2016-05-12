@@ -180,6 +180,7 @@ void WeatherStation::menu(int argc, char *argv[]){
                 }
                 
                 // SAVE DATA TO FILE
+                cout << vec_data.size() << endl;
                 this->SaveDataToFile(vec_data);
                 
                 
