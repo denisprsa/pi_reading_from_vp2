@@ -495,11 +495,11 @@ void WeatherStation::showMenu(){
 void WeatherStation::OpenSerialPort(){
 
     //open port
-    this->fd = open(this->path, O_RDWR | O_NOCTTY );
+    this->fd = open(this->serial_port_path, O_RDWR | O_NOCTTY );
 
     //check if opening failed
     if(this->fd == -1){
-        cout << "error while opening port : Unable to open  " <<  path << "."<< endl;
+        cout << "error while opening port : Unable to open  " <<  this->serial_port_path << "."<< endl;
         return;
     }
 
