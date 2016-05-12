@@ -1,5 +1,5 @@
 CC = g++-4.9
-CFLAGS  = -g -Wall -std=c++14 -pedantic
+CFLAGS  = -g -Wall -std=c++14 -pedantic -std=c++11
 
 TARGET = vproweather
 all:	$(TARGET)
