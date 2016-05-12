@@ -22,6 +22,7 @@
 #include <fstream>
 #include <vector>
 #include <math.h>
+#include <time.h>
 #include "ArchiveStruct.h"
 #include "WeatherStation.h"
 #include "main.h"
