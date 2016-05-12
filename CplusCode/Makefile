@@ -1,18 +1,16 @@
-CC = g++-4.9
-CFLAGS  = -g -Wall -std=c++14 -pedantic -std=c++11
+CXX=g++-4.9
+CXXFLAGS=-g -std=c++11 -Wall -pedantic
+BIN= vreme
 
-TARGET = vproweather
-all:	$(TARGET)
+SRC=$(wildcard *.cpp)
+OBJ=$(SRC:%.cpp=%.o)
 
-$(TARGET): main.o WeatherStation.o
-	$(CC) main.o WeatherStation.o -o $(TARGET)
+all: $(OBJ)
+    $(CXX) -o $(BIN) $^
 
-main.o: main.cpp main.h WeatherStation.h
-	$(CC) $(CFLAGS) -c main.cpp
-
-dhandler.o: WeatherStation.cpp WeatherStation.h
-	$(CC) $(CFLAGS) -c WeatherStation.cpp
+%.o: %.c
+    $(CXX) $@ -c $<
 
 clean:
-	rm -f $(TARGET) *.o
-
+    rm -f *.o
+    rm $(BIN)
