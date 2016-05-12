@@ -35,7 +35,7 @@ using namespace std;
 
 
 // CONSTRUCTOR
-WeatherStation::WeatherStation(string path, string ){
+WeatherStation::WeatherStation(string path){
     this->path = path.c_str();
     this->yDelay = 10;
     
@@ -259,7 +259,7 @@ ARDATA_c_t WeatherStation::ConvertToHumanData(ARDATA_b_t data){
     // NUMBER OF WIND SAMPLES
     output_data.inside = data.inside;
     // INISDE HUMIDITY
-    output_data.insideH = data.inisdeH;
+    output_data.insideH = data.insideH;
     // OUTSIDE HUMIDITY
     output_data.outsideH = data.outsideH;
     // AVRAGE WIND SPEED

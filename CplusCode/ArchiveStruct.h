@@ -67,6 +67,7 @@ struct ARDATA_c_t
     double barometer;
     double numwisa;
     double inside;
+    double insideH;
     double outsideH;
     double avgWindSpeed;
     double highWindSpeed;
