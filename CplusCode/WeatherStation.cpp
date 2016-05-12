@@ -242,6 +242,7 @@ void WeatherStation::SaveDataToFile(vector<ARDATA_c_t> data_to_save){
     
     for(int i = 0; i < data_to_save.size(); i++){
         string out_data = this->PrepareDataOut(data_to_save[i]);
+        cout << out_data << endl;
         out_file << out_data << "\n";
         
     }
