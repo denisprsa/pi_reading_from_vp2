@@ -224,6 +224,7 @@ bool WeatherStation::ReadRowFromWeatherStation(vector<ARDATA_c_t> &data_converte
                         return true;
                 }
             }
+            data_converted.push_back(data_c);
             from += 52;
         }
     }
