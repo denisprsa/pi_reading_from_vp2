@@ -215,8 +215,7 @@ bool WeatherStation::ReadRowFromWeatherStation(vector<ARDATA_c_t> &data_converte
             
             int size_data = data_converted.size();
             if(size_data > 0){
-                
-                if(date1 > date2){
+                if(date1 > date2)
                     return true;
                 
             }
