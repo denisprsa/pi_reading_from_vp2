@@ -208,6 +208,14 @@ bool WeatherStation::ReadRowFromWeatherStation(vector<ARDATA_c_t> &data_converte
             ARDATA_c_t data_c = this->ConvertToHumanData(data);
             
             // IF DATE SMALLER FROM CURRENT READED DATA, THEN RETURN END OF DATA READING
+            struct tm tmdate = {0};
+            tmdate.tm_year = data_converted[data_converted.size()-1].year - 1900;
+            tmdate.tm_mon = data_converted[data_converted.size()-1].month - 1;
+            tmdate.tm_mday = data_converted[data_converted.size()-1].day;
+            tmdate.tm_hour = data_converted[data_converted.size()-1].hour;
+            tmdate.tm_min = data_converted[data_converted.size()-1].minutes;
+            time_t t = mktime( &tmdate );
+            
             int size_data = data_converted.size();
             if(size_data > 0){
                 
@@ -220,8 +228,6 @@ bool WeatherStation::ReadRowFromWeatherStation(vector<ARDATA_c_t> &data_converte
                     if( data_c.hour < data_converted[data_converted.size()-1].hour ){
                         return true;
                     }
-                    if( data_c.minutes < data_converted[data_converted.size()-1].minutes )
-                        return true;
                 }
             }
             data_converted.push_back(data_c);
