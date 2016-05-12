@@ -210,26 +210,15 @@ bool WeatherStation::ReadRowFromWeatherStation(vector<ARDATA_c_t> &data_converte
             
             // IF DATE SMALLER FROM CURRENT READED DATA, THEN RETURN END OF DATA READING
             struct tm tmdate = {0};
-            tmdate.tm_year = data_converted[data_converted.size()-1].year - 1900;
-            tmdate.tm_mon = data_converted[data_converted.size()-1].month - 1;
-            tmdate.tm_mday = data_converted[data_converted.size()-1].day;
-            tmdate.tm_hour = data_converted[data_converted.size()-1].hour;
-            tmdate.tm_min = data_converted[data_converted.size()-1].minutes;
-            time_t t = mktime( &tmdate );
+            int date1 = (data_converted[data_converted.size()-1].year - 2000) * tmdate.tm_mon = data_converted[data_converted.size()-1].month - 1 * tmdate.tm_mday = data_converted[data_converted.size()-1].day * tmdate.tm_hour = data_converted[data_converted.size()-1].hour* tmdate.tm_min = data_converted[data_converted.size()-1].minutes;
+            int date2 = (data_c.year -2000 )* data_c.month * data_c.day * data_c.hour * data_c.minutes;
             
             int size_data = data_converted.size();
             if(size_data > 0){
                 
-                if(data_c.year < data_converted[data_converted.size()-1].year ||
-                   data_c.month < data_converted[data_converted.size()-1].month ||
-                   data_c.day < data_converted[data_converted.size()-1].day){
+                if(date1 > date2){
                     return true;
-                } else {
-                    // CHECK IF TIME SMALLER
-                    if( data_c.hour < data_converted[data_converted.size()-1].hour ){
-                        return true;
-                    }
-                }
+                
             }
             data_converted.push_back(data_c);
             from += 52;
