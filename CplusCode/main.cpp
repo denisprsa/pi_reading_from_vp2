@@ -14,7 +14,7 @@ using namespace std;
 int main(int argc, char *argv[])
 {
 
-    WeatherStation *vp = new WeatherStation("/home/pi/.wine/dosdevices/com3");
+    WeatherStation *vp = new WeatherStation("/home/pi/.wine/dosdevices/com3", "settings.json", "data.csv");
     
     vp->menu(argc, argv);
     

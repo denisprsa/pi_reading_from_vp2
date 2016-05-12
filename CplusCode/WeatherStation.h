@@ -22,7 +22,8 @@ class WeatherStation{
     private:
         // VARIABLES FOR OPENING PORT
         int fd;
-        const char * path;
+        const char * serial_port_path;
+        string data_filename, settings_filename;
         struct termios oldsio, newsio;
         int yDelay;
     
@@ -36,7 +37,7 @@ class WeatherStation{
     
     public:
     
-        WeatherStation(string path);
+        WeatherStation(string serial_port, string setting, string data_filename);
         void OpenSerialPort();
         int WakeUpStation();
         int ReadNextChar(char *pChar);

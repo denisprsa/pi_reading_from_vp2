@@ -21,6 +21,7 @@
 #include <complex>
 #include <fstream>
 #include <vector>
+#include <math.h>
 #include "ArchiveStruct.h"
 #include "WeatherStation.h"
 #include "main.h"
@@ -33,13 +34,20 @@ using namespace std;
 // FOR MORE DETAILS SEE : http://www.davisnet.com/support/weather/download/VantageSerialProtocolDocs_v261.pdf
 //
 
-
+/*--------------------------------------------------------
 // CONSTRUCTOR
-WeatherStation::WeatherStation(string path){
-    this->path = path.c_str();
+// PARAMETERS ::
+// serial_port          :: PATH TO SERIAL PORT CONNECTION
+// settings_filename    :: SETTINGS ARE STORED IN JSON FILE, SPECIFY PATH
+// data_filename        :: FILE NAME FOR STORED DATA (CSV)
+// --------------------------------------------------------
+*/
+WeatherStation::WeatherStation(string serial_port, string settings_filename, string data_filename){
+    this->serial_port_path = serial_port.c_str();
+    this->settings_filename = settings_filename;
+    this->data_filename = data_filename;
     this->yDelay = 10;
     
-
 }
 
 
@@ -72,12 +80,13 @@ void WeatherStation::menu(int argc, char *argv[]){
                 
                 // OPENING SERIAL PORT
                 this->OpenSerialPort();
-                // WAKING UP WEATHER STATION
                 
+                // WAKING UP WEATHER STATION
                 if(this->WakeUpStation() != -1){
                     cout << "Error while waking up weather station! Check connection." << endl;
                     exit(2);
                 }
+                
                 // SEND COMMAND TO READ OUT ARHIVE DATA
                 if(write(this->fd, "DMPAFT\n", 7) != 7){
                     cout << "Error while writing to serial port " << endl;
@@ -90,7 +99,6 @@ void WeatherStation::menu(int argc, char *argv[]){
                 
                 // IF NO ERROR THEN GET TIME FROM CONSOLE, OR READ FROM FILE. EXIT IF NO DATETIME PASSED.
                 const char *dateTime = this->getDateTime(optarg);
-                
                 
                 
                 // WRITE DATE TIME AND LOW AND HIGH BITS
@@ -169,9 +177,12 @@ void WeatherStation::menu(int argc, char *argv[]){
                         }
                     }
                     
-                    
                 }
                 
+                // SAVE DATA TO FILE
+                
+                
+                break;
         }
     }
 }
@@ -214,6 +225,61 @@ bool WeatherStation::ReadRowFromWeatherStation(vector<ARDATA_c_t> &data_converte
         }
     }
     return false;
+}
+
+
+
+// --------------------------------------------------------
+//
+//
+// --------------------------------------------------------
+void WeatherStation::SaveDataToFile(vector<ARDATA_c_t> data_to_save){
+    ofstream out_file;
+    // OPEN FILE AND APPEND DATA
+    out_file.open(this->data_filename, ios::app);
+    
+    for(int i = 0; i < data_to_save.size(); i++){
+        string out_data = this->PrepareDataOut(data_to_save[i]);
+        out_file << out_data;
+        
+    }
+    
+}
+
+
+
+// --------------------------------------------------------
+//
+//
+// --------------------------------------------------------
+string WeatherStation::PrepareDataOut(ARDATA_c_t data){
+    
+    string data_out = "";
+    // TIME
+    data_out += to_string(data.day) + "." + to_string(data.month) + "." + to_string(data.year) + " ";
+    data_out += to_string(data.hour) + ":" + to_string(data.minutes) + ",";
+    // TEMPERATURE
+    data_out += to_string(floor(data.outside * 100.0) / 10.0) + ",";
+    // HUMIDITY OUTSIDE
+    data_out += to_string(floor(data.outsideH * 100.0) / 10.0) + ",";
+    // DEWPOINT
+    double v = data.outsideH * 0.01 * 6.112 * exp( (17.62*data.outside)/(data.outside + 243.12) );
+    double numerator = 243.12*(log(v) / log(2.718281828459045235) ) – 440.1;
+    double denominator = 19.43 – (log(v) / log(2.718281828459045235));
+    data_out += to_string(floor(numerator / denominator) / 10.0) + ",";
+    // BAROMETER
+    data_out += to_string(data.barometer) + ",";
+    // WINDSPEED HIGH
+    data_out += to_string(data.highWindSpeed) + ",";
+    // WINDSPEED AVG
+    data_out += to_string(data.avgWindSpeed) + ",";
+    // DIRECTION DOMINANT WIND
+    data_out += to_string(data.directionDominantWind) + ",";
+    // RAIN
+    data_out += to_string(data.rainfall) + ",";
+    
+    
+    return data_out;
 }
 
 
@@ -338,6 +404,7 @@ char *WeatherStation::getDateTime(char *_string){
     
     if(_string[0] == 'D' && _string[1] == ':' && _string[2] == ':'){
         
+        //  CONVERT CONSOLE PARAMETERS
         while (_string[counter] != '\0') {
             if(_string[counter] == 'y'){
                 year = this->getNumberFromChar(_string, counter);
