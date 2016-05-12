@@ -35,6 +35,7 @@ class WeatherStation{
         bool ReadRowFromWeatherStation(vector<ARDATA_c_t> &data, char *buffer, int row);
         ARDATA_c_t ConvertToHumanData(ARDATA_b_t data);
         string PrepareDataOut(ARDATA_c_t data);
+        string toStrMaxDecimals(double value, int decimals);
     
     public:
     

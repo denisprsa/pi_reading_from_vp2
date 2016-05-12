@@ -214,6 +214,7 @@ bool WeatherStation::ReadRowFromWeatherStation(vector<ARDATA_c_t> &data_converte
             if(size_data > 0){
                 int date1 = (data_converted[data_converted.size()-1].year - 2000) *  data_converted[data_converted.size()-1].month *  data_converted[data_converted.size()-1].day * (data_converted[data_converted.size()-1].hour+1)*  (data_converted[data_converted.size()-1].minutes+1);
                 int date2 = (data_c.year -2000 )* data_c.month * data_c.day * (data_c.hour+1) * (data_c.minutes +1);
+                cout<< date1 << " " << date2 << endl;
                 if(date1 > date2)
                     return true;
                 
@@ -259,27 +260,44 @@ string WeatherStation::PrepareDataOut(ARDATA_c_t data){
     data_out += to_string(data.day) + "." + to_string(data.month) + "." + to_string(data.year) + " ";
     data_out += to_string(data.hour) + ":" + to_string(data.minutes) + ",";
     // TEMPERATURE
-    data_out += to_string(floor(data.outside * 100.0) / 10.0) + ",";
+    data_out += this->toStrMaxDecimals(floor(data.outside * 10.0) / 10.0, 1) + ",";
     // HUMIDITY OUTSIDE
-    data_out += to_string(floor(data.outsideH * 100.0) / 10.0) + ",";
+    data_out += this->toStrMaxDecimals(floor(data.outsideH * 10.0) / 10.0, 1) + ",";
     // DEWPOINT
     double v = data.outsideH*0.01*6.112*exp((17.62*data.outside)/(data.outside+243.12));
     double numerator = 243.12*(log(v)/log(2.718281828459045235) )-440.1;
     double denominator = 19.43-(log(v)/log(2.718281828459045235));
-    data_out += to_string(floor(numerator/denominator) / 10.0) + ",";
+    data_out += this->toStrMaxDecimals(floor(numerator/denominator), 1) + ",";
     // BAROMETER
-    data_out += to_string(data.barometer) + ",";
+    data_out += this->toStrMaxDecimals(data.barometer, 1) + ",";
     // WINDSPEED HIGH
-    data_out += to_string(data.highWindSpeed) + ",";
+    data_out += this->toStrMaxDecimals(data.highWindSpeed, 1) + ",";
     // WINDSPEED AVG
-    data_out += to_string(data.avgWindSpeed) + ",";
+    data_out += this->toStrMaxDecimals(data.avgWindSpeed, 1) + ",";
     // DIRECTION DOMINANT WIND
-    data_out += to_string(data.directionDominantWind) + ",";
+    data_out += this->toStrMaxDecimals(data.directionDominantWind, 1) + ",";
     // RAIN
-    data_out += to_string(data.rainfall) + ",";
+    data_out += this->toStrMaxDecimals(data.rainfall, 1) + ",";
     
     
     return data_out;
+}
+
+
+
+// --------------------------------------------------------
+//
+//
+// --------------------------------------------------------
+string WeatherStation::toStrMaxDecimals(double value, int decimals)
+{
+    ostringstream ss;
+    ss << fixed << setprecision(decimals) << value;
+    string s = ss.str();
+    if(decimals > 0 && s[s.find_last_not_of('0')] == '.') {
+        s.erase(s.size() - decimals + 1);
+    }
+    return s;
 }
 
 
