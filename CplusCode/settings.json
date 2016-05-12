@@ -1,0 +1,17 @@
+{
+    "serverMySql" : {
+        "use" : "true",
+        "address" : "vremezizki.si",
+        "dbUserName" : "",
+        "dbPassword" : "",
+        "table" : "podatkii"
+    },
+    "serverAPI" : {
+        "address" : "",
+        "dbUserName" : "",
+        ""
+    },
+    "wunderground" : {
+        
+    }
+}

@@ -19,12 +19,14 @@
 #include <stdint.h>
 #include <sstream>
 #include <complex>
+#include <fstream>
 #include <vector>
 #include "ArchiveStruct.h"
 #include "WeatherStation.h"
 #include "main.h"
+#include "json.hpp"
 
-
+using json = nlohmann::json;
 using namespace std;
 
 //
@@ -33,7 +35,7 @@ using namespace std;
 
 
 // CONSTRUCTOR
-WeatherStation::WeatherStation(string path){
+WeatherStation::WeatherStation(string path, string ){
     this->path = path.c_str();
     this->yDelay = 10;
     
@@ -217,7 +219,8 @@ bool WeatherStation::ReadRowFromWeatherStation(vector<ARDATA_c_t> &data_converte
 
 
 // --------------------------------------------------------
-// FUNCTION THAT CHECKS FOR ACK
+// FUNCTION THAT CONVERTS BITS TO HUMAN READABLE INT,
+// DOUBLE, STRINGS
 // --------------------------------------------------------
 ARDATA_c_t WeatherStation::ConvertToHumanData(ARDATA_b_t data){
     ARDATA_c_t output_data;
@@ -252,8 +255,42 @@ ARDATA_c_t WeatherStation::ConvertToHumanData(ARDATA_b_t data){
     // BAROMETER (mbar)
     output_data.barometer = (data.barometer / 1000)* 33.8638815;
     // SOLAR (W)
-    
+    output_data.numwisa = data.numwisa;
     // NUMBER OF WIND SAMPLES
+    output_data.inside = data.inside;
+    // INISDE HUMIDITY
+    output_data.insideH = data.inisdeH;
+    // OUTSIDE HUMIDITY
+    output_data.outsideH = data.outsideH;
+    // AVRAGE WIND SPEED
+    output_data.avgWindSpeed = data.avgWindSpeed;
+    // HIGH WIND SPEED
+    output_data.highWindSpeed = data.highWindSpeed;
+    // DIRECTION OF HIGH WIND SPEED
+    output_data.directionHighWindSpeed = data.directionHighWindSpeed;
+    // DIRECTION OF DOMINANT WIND
+    output_data.directionDominantWind = data.directionDominantWind;
+    // UV INDEX
+    output_data.UVindex = data.UVindex;
+    // ET ???
+    output_data.ET = data.ET;
+    // HIGHEST SOLAR RADIATION
+    output_data.highSolarRadiation = data.highSolarRadiation;
+    // HIGH UV RADIATION
+    output_data.highUVindex = data.highUVindex;
+    // FORECAST RULE, THERE ARE 193 RULES IN XXX.H
+    // TODO
+    output_data.forecastRule = data.forecastRule;
+    // LEAF TEMPERATURE 1
+    // .
+    // .
+    // .
+    // TODO
+    
+    // RECORD TYPE
+    output_data.recordType = data.recordType;
+    
+    
     
     
     
@@ -543,5 +580,22 @@ int WeatherStation::ReadToBuffer( char *pszBuffer, int nBufSize)
     }
     return -1;                  /* buffer overflow */
 }
+
+
+
+// --------------------------------------------------------
+// FUNCTION THAT CHECKS FOR CRC CODE
+// --------------------------------------------------------
+string WeatherStation::ReadJSONsettings(string name_of_file){
+    // OPEN FILE
+    ifstream file(name_of_file);
+    string line, all_lines = "";
+    while (getline(file, line))
+    {
+        all_lines.append( line );
+    }
+    return all_lines;
+}
+
 
 

@@ -35,12 +35,13 @@ class WeatherStation{
         ARDATA_c_t ConvertToHumanData(ARDATA_b_t data);
     
     public:
+    
         WeatherStation(string path);
         void OpenSerialPort();
         int WakeUpStation();
         int ReadNextChar(char *pChar);
         int ReadToBuffer( char *pszBuffer, int nBufSize);
-    
+        string ReadJSONsettings(string name_of_file);
     
         void menu(int argc, char *argv[]);
         void showMenu();
