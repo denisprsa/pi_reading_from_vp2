@@ -180,6 +180,8 @@ void WeatherStation::menu(int argc, char *argv[]){
                 }
                 
                 // SAVE DATA TO FILE
+                this->SaveDataToFile(vec_data);
+                
                 
                 
                 break;
@@ -240,7 +242,7 @@ void WeatherStation::SaveDataToFile(vector<ARDATA_c_t> data_to_save){
     
     for(int i = 0; i < data_to_save.size(); i++){
         string out_data = this->PrepareDataOut(data_to_save[i]);
-        out_file << out_data;
+        out_file << out_data << "\n";
         
     }
     
