@@ -238,7 +238,7 @@ bool WeatherStation::ReadRowFromWeatherStation(vector<ARDATA_c_t> &data_converte
 void WeatherStation::SaveDataToFile(vector<ARDATA_c_t> data_to_save){
     ofstream out_file;
     // OPEN FILE AND APPEND DATA
-    out_file.open(this->data_filename, ios::app);
+    out_file.open(this->data_filename, std::ofstream::out | std::ofstream::app);
     
     for(int i = 0; i < data_to_save.size(); i++){
         string out_data = this->PrepareDataOut(data_to_save[i]);
@@ -246,6 +246,7 @@ void WeatherStation::SaveDataToFile(vector<ARDATA_c_t> data_to_save){
         out_file << out_data << "\n";
         
     }
+    out_file.close();
     
 }
 
