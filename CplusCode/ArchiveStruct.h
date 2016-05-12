@@ -91,7 +91,7 @@ struct ARDATA_c_t
     double extraTemperature1;
     double extraTemperature2;
     double extraTemperature3;
-    double soil
+    double soil;
 };
 
 #endif /* ArchiveStruct_h */
