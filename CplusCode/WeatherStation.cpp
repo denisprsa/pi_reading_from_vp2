@@ -212,8 +212,8 @@ bool WeatherStation::ReadRowFromWeatherStation(vector<ARDATA_c_t> &data_converte
            
             int size_data = data_converted.size();
             if(size_data > 0){
-                int date1 = ((data_converted[data_converted.size()-1].year - 2000)*365) + (data_converted[data_converted.size()-1].month * 32) +  (data_converted[data_converted.size()-1].day*24) +((data_converted[data_converted.size()-1].hour+1) *60) + data_converted[data_converted.size()-1].minutes;
-                int date2 = ((data_c.year -2000 ) *365)+ (data_c.month *32) + (data_c.day*24) + ((data_c.hour+1) * 60) + (data_c.minutes );
+                double date1 = ((data_converted[data_converted.size()-1].year - 2000)*624415) + (data_converted[data_converted.size()-1].month * 48032) +  (data_converted[data_converted.size()-1].day*1501) +((data_converted[data_converted.size()-1].hour+1) *60) + data_converted[data_converted.size()-1].minutes;
+                double date2 = ((data_c.year -2000 ) *624415)+ (data_c.month * 48032) + (data_c.day*1501) + ((data_c.hour+1) * 60) + (data_c.minutes );
                 cout<< date1 << " " << date2 << endl;
                 if(date1 > date2)
                     return true;
