@@ -209,11 +209,11 @@ bool WeatherStation::ReadRowFromWeatherStation(vector<ARDATA_c_t> &data_converte
             ARDATA_c_t data_c = this->ConvertToHumanData(data);
             
             // IF DATE SMALLER FROM CURRENT READED DATA, THEN RETURN END OF DATA READING
-            int date1 = (data_converted[data_converted.size()-1].year - 2000) *  data_converted[data_converted.size()-1].month *  data_converted[data_converted.size()-1].day * data_converted[data_converted.size()-1].hour*  data_converted[data_converted.size()-1].minutes;
-            int date2 = (data_c.year -2000 )* data_c.month * data_c.day * data_c.hour * data_c.minutes;
-            
+           
             int size_data = data_converted.size();
             if(size_data > 0){
+                int date1 = (data_converted[data_converted.size()-1].year - 2000) *  data_converted[data_converted.size()-1].month *  data_converted[data_converted.size()-1].day * data_converted[data_converted.size()-1].hour*  data_converted[data_converted.size()-1].minutes;
+                int date2 = (data_c.year -2000 )* data_c.month * data_c.day * data_c.hour * data_c.minutes;
                 if(date1 > date2)
                     return true;
                 
