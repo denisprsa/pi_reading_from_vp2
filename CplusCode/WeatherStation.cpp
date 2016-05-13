@@ -78,7 +78,7 @@ void WeatherStation::menu(int argc, char *argv[]){
         switch (c) {
             
             case 'a':
-                while (this->ReadNextChar(&ch));
+                //while (this->ReadNextChar(&ch));
                 // OPENING SERIAL PORT
                 this->OpenSerialPort();
                 char bb = 0x1B;
@@ -93,6 +93,7 @@ void WeatherStation::menu(int argc, char *argv[]){
                     cout << "Error while writing to serial port " << endl;
                     exit(2);
                 }
+                while (this->ReadNextChar(&ch));
                 if(!checkACK()){
                     exit(2);
                 }
