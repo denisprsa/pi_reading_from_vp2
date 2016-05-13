@@ -472,7 +472,7 @@ char *WeatherStation::getDateTime(char *_string){
         if(file)
         {
             std::string line;
-            while (file >> ws && = getline(file, line));
+            while (file >> ws && getline(file, line));
             cout << line << endl;
         }
         
