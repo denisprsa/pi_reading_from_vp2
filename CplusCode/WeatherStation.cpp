@@ -464,6 +464,17 @@ char *WeatherStation::getDateTime(char *_string){
         return datah;
 
     } else if (_string[0] == 'F' && _string[1] == ':' && _string[2] == ':'){
+        string file_name = "";
+        while(_string[counter] != '\0'){
+            string str(_string[counter]);
+            file_name += str;
+            counter ++;
+        }
+        cout << file_name << endl;
+        // FILE DATETIME
+        fstream file;
+        //file.open("temp.txt");
+        
         
     } else {
         cout << "No datetime or file passed. Exiting!" << endl;
