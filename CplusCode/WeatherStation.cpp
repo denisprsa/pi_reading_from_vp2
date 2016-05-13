@@ -269,7 +269,7 @@ string WeatherStation::PrepareDataOut(ARDATA_c_t data){
     double denominator = 19.43-(log(v)/log(2.718281828459045235));
     data_out += this->toStrMaxDecimals((floor(numerator/denominator)*10.0) / 10.0 , 1) + ",";
     // BAROMETER
-    data_out += this->toStrMaxDecimals(data.barometer, 1) + ",";
+    data_out += to_string((int) data.barometer) + ",";
     // WINDSPEED HIGH
     data_out += this->toStrMaxDecimals(data.highWindSpeed, 1) + ",";
     // WINDSPEED AVG
@@ -337,7 +337,7 @@ ARDATA_c_t WeatherStation::ConvertToHumanData(ARDATA_b_t data){
     // HIGHRAINFALL IN THAT TIME (mm)
     output_data.rainfall = data.highRainFall * 0.2;
     // BAROMETER (mbar)
-    output_data.barometer = (data.barometer / 1000)* 33.8638815;
+    output_data.barometer = (data.barometer / 1000);
     // SOLAR (W)
     output_data.numwisa = data.numwisa;
     // NUMBER OF WIND SAMPLES
