@@ -517,7 +517,7 @@ char *WeatherStation::getDateTime(char *_string){
             if (date.peek() == '.')
                 date.ignore();
         }
-         */
+        
     
     
         stringstream time(vec_dat_time.at(1));
@@ -531,7 +531,7 @@ char *WeatherStation::getDateTime(char *_string){
         }
 
     
-    
+     */
     
     
         int vantageDateStamp = stoi(vect_dat.at(0)) + stoi(vect_dat.at(1))*32 + (stoi(vect_dat.at(2))-2000)*512;
