@@ -89,14 +89,14 @@ void WeatherStation::menu(int argc, char *argv[]){
                 }
                 
                 // SEND COMMAND TO READ OUT ARHIVE DATA
-                if(write(this->fd, "DMPAFT\n", 7) != 7){
+                if(write(this->fd, 0x1B, 1) != 1){
                     cout << "Error while writing to serial port " << endl;
                     exit(2);
                 }
                 if(!checkACK()){
                     exit(2);
                 }
-                
+                /*
                 
                 // IF NO ERROR THEN GET TIME FROM CONSOLE, OR READ FROM FILE. EXIT IF NO DATETIME PASSED.
                 const char *dateTime = this->getDateTime(optarg);
@@ -184,7 +184,7 @@ void WeatherStation::menu(int argc, char *argv[]){
                 // SAVE DATA TO FILE
                 cout << vec_data.size() << endl;
                 this->SaveDataToFile(vec_data);
-                
+                */
                 
                 
                 break;
