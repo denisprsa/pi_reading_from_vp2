@@ -271,7 +271,7 @@ string WeatherStation::PrepareDataOut(ARDATA_c_t data){
     double denominator = 19.43-(log(v)/log(2.718281828459045235));
     data_out += this->toStrMaxDecimals((floor(numerator/denominator)*10.0) / 10.0 , 1) + ",";
     // BAROMETER
-    data_out += this->toStrMaxDecimals( data.barometer,2) + ",";
+    data_out += to_string( data.barometer ) + ",";
     // WINDSPEED HIGH
     data_out += this->toStrMaxDecimals(data.highWindSpeed, 1) + ",";
     // WINDSPEED AVG
