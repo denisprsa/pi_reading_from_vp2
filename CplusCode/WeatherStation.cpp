@@ -284,7 +284,6 @@ string WeatherStation::PrepareDataOut(ARDATA_c_t data){
     // DIRECTION DOMINANT WIND
     data_out += to_string( data.directionDominantWind ) + ",";
     // RAIN
-    cout << "RAIN OUT " << data.rainfall << endl;
     data_out += this->toStrMaxDecimals(data.rainfall, 1) + ",";
     
     
@@ -342,10 +341,8 @@ ARDATA_c_t WeatherStation::ConvertToHumanData(ARDATA_b_t data){
     output_data.lowOut = ((data.lowOut / 10.0) - 32 ) * 5/9;
     // RAIN ACC (mm)
     output_data.rainfall = ((double)data.rainfall) * 0.2;
-    cout << "R " << data.rainfall << "R1 " << (double)data.rainfall << "R2 " << (((double)data.rainfall) * 0.2)<<endl;
-    cout << "OUT " <<output_data.rainfall << endl;
     // HIGHRAINFALL IN THAT TIME (mm)
-    output_data.rainfall = data.highRainFall * 0.2;
+    output_data.highRainFall = ((double)data.highRainFall) * 0.2;
     // BAROMETER (mbar)
     output_data.barometer = (data.barometer / 1000.0)* 33.8638815;
     // SOLAR (W)
