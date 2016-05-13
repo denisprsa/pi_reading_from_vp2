@@ -337,7 +337,7 @@ ARDATA_c_t WeatherStation::ConvertToHumanData(ARDATA_b_t data){
     // HIGHRAINFALL IN THAT TIME (mm)
     output_data.rainfall = data.highRainFall * 0.2;
     // BAROMETER (mbar)
-    cout << "B inHg " << data.barometer << " mb " << (data.barometer / 1000)* 33.8638815 << endl;
+    cout << "B inHg " << data.barometer << " dsf " << (data.barometer / 1000) << " mb " << ((double)(data.barometer / 1000))* 33.8638815 << endl;
     output_data.barometer = (data.barometer / 1000)* 33.8638815;
     // SOLAR (W)
     output_data.numwisa = data.numwisa;
