@@ -155,7 +155,7 @@ void WeatherStation::menu(int argc, char *argv[]){
                         cout << "Trying once again ..." << endl;
                         
                         // TODO ::::
-                        
+                        break;
                     } else {
                         // CHECK FOR CRC
                         if((num_pack = this->CheckCRC(267, SerBuffer))) {
@@ -163,6 +163,7 @@ void WeatherStation::menu(int argc, char *argv[]){
                             cout << "Trying once again ..." << endl;
                             
                             // TODO ::::
+                            break;
                         }
                         
                         // IF FIRST TIME CHECK WHAT ROW IN PAGE CONTAINS ACCURATE DATEITME
