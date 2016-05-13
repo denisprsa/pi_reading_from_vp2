@@ -474,14 +474,21 @@ char *WeatherStation::getDateTime(char *_string){
         // FILE DATETIME
         fstream file;
         //file.open("temp.txt");
-        
+        datah[0] = 0xff;
+        datah[1] = 0xff;
+        datah[2] = 0xff;
+        datah[3] = 0xff;
+        i = this->CheckCRC(4, datah);
+        datah[4] = HIBYTE(i);
+        datah[5] = LOBYTE(i);
+        return datah;
         
     } else {
         cout << "No datetime or file passed. Exiting!" << endl;
         exit(2);
     }
     
-    return new char[1];
+    return new char[6];
 }
 
 
