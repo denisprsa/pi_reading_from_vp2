@@ -215,7 +215,6 @@ bool WeatherStation::ReadRowFromWeatherStation(vector<ARDATA_c_t> &data_converte
             if(size_data > 0){
                 double date1 = ((data_converted[data_converted.size()-1].year - 2000)*624415) + (data_converted[data_converted.size()-1].month * 48032) +  (data_converted[data_converted.size()-1].day*1501) +((data_converted[data_converted.size()-1].hour+1) *60) + data_converted[data_converted.size()-1].minutes;
                 double date2 = ((data_c.year -2000 ) *624415)+ (data_c.month * 48032) + (data_c.day*1501) + ((data_c.hour+1) * 60) + (data_c.minutes );
-                cout<< date1 << " " << date2 << endl;
                 if(date1 > date2)
                     return true;
                 
@@ -240,7 +239,7 @@ void WeatherStation::SaveDataToFile(vector<ARDATA_c_t> data_to_save){
     
     for(int i = 0; i < data_to_save.size(); i++){
         string out_data = this->PrepareDataOut(data_to_save[i]);
-        cout << out_data << endl;
+        
         out_file << out_data << "\n";
         
     }
@@ -268,7 +267,6 @@ string WeatherStation::PrepareDataOut(ARDATA_c_t data){
     double v = data.outsideH*0.01*6.112*exp((17.62*data.outside)/(data.outside+243.12));
     double numerator = 243.12*(log(v)/log(2.718281828459045235) )-440.1;
     double denominator = 19.43-(log(v)/log(2.718281828459045235));
-    cout << "NUM " << numerator << " - " << denominator << endl;
     data_out += this->toStrMaxDecimals((double)(numerator/denominator) , 1) + ",";
     // BAROMETER
     data_out += this->toStrMaxDecimals(data.barometer , 1) + ",";
@@ -277,7 +275,7 @@ string WeatherStation::PrepareDataOut(ARDATA_c_t data){
     // WINDSPEED AVG
     data_out += this->toStrMaxDecimals(data.avgWindSpeed, 1) + ",";
     // DIRECTION DOMINANT WIND
-    data_out += this->toStrMaxDecimals(data.directionDominantWind, 1) + ",";
+    data_out += to_string( data.directionDominantWind ) + ",";
     // RAIN
     data_out += this->toStrMaxDecimals(data.rainfall, 1) + ",";
     
@@ -398,7 +396,6 @@ ARDATA_c_t WeatherStation::ConvertToHumanData(ARDATA_b_t data){
 bool WeatherStation::checkACK(){
     char ch = 0x00;
     this->ReadNextChar(&ch);
-    cout << ch << endl;
     if(ch != 0x06){
         cout << "Error ! No ACK recevied." << endl;
         return false;
