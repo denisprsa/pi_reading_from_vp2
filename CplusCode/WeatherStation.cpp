@@ -81,7 +81,7 @@ void WeatherStation::menu(int argc, char *argv[]){
                 while (this->ReadNextChar(&ch));
                 // OPENING SERIAL PORT
                 this->OpenSerialPort();
-                
+                char bb = 0x1B;
                 // WAKING UP WEATHER STATION
                 if(this->WakeUpStation() != -1){
                     cout << "Error while waking up weather station! Check connection." << endl;
@@ -89,7 +89,7 @@ void WeatherStation::menu(int argc, char *argv[]){
                 }
                 
                 // SEND COMMAND TO READ OUT ARHIVE DATA
-                if(write(this->fd, (char)0x1B, 1) != 1){
+                if(write(this->fd, &bb, 1) != 1){
                     cout << "Error while writing to serial port " << endl;
                     exit(2);
                 }
