@@ -474,7 +474,7 @@ char *WeatherStation::getDateTime(char *_string){
         // FILE DATETIME
         fstream file;
         //file.open("temp.txt");
-        int vantageDateStamp = 1 + 5*32 + (2016-2000)*512;
+        int vantageDateStamp = 10 + 5*32 + (2016-2000)*512;
         int vantageTimeStamp = (100*4 + 20);
         
         char b1 = (vantageDateStamp >> 8) & 0xFF;
