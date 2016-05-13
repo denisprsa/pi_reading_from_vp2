@@ -61,7 +61,7 @@ void WeatherStation::menu(int argc, char *argv[]){
     // VARIABLES FOR READING ARGUMENTS FROM CONSOLE
     extern char *optarg;
     extern int optind, opterr, optopt;
-    char ch;
+    
     int c;
     
     static struct option longopts[] = {
@@ -78,10 +78,10 @@ void WeatherStation::menu(int argc, char *argv[]){
         switch (c) {
             
             case 'a':
-                //while (this->ReadNextChar(&ch));
+                
                 // OPENING SERIAL PORT
                 this->OpenSerialPort();
-                char bb = 0x1B;
+                
                 // WAKING UP WEATHER STATION
                 if(this->WakeUpStation() != -1){
                     cout << "Error while waking up weather station! Check connection." << endl;
@@ -89,15 +89,14 @@ void WeatherStation::menu(int argc, char *argv[]){
                 }
                 
                 // SEND COMMAND TO READ OUT ARHIVE DATA
-                if(write(this->fd, &bb, 1) != 1){
+                if(write(this->fd, "DMPAFT\n", 7) != 7){
                     cout << "Error while writing to serial port " << endl;
                     exit(2);
                 }
-                while (this->ReadNextChar(&ch));
                 if(!checkACK()){
                     exit(2);
                 }
-                /*
+                
                 
                 // IF NO ERROR THEN GET TIME FROM CONSOLE, OR READ FROM FILE. EXIT IF NO DATETIME PASSED.
                 const char *dateTime = this->getDateTime(optarg);
@@ -185,7 +184,7 @@ void WeatherStation::menu(int argc, char *argv[]){
                 // SAVE DATA TO FILE
                 cout << vec_data.size() << endl;
                 this->SaveDataToFile(vec_data);
-                */
+                
                 
                 
                 break;
