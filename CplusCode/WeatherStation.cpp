@@ -284,6 +284,7 @@ string WeatherStation::PrepareDataOut(ARDATA_c_t data){
     // DIRECTION DOMINANT WIND
     data_out += to_string( data.directionDominantWind ) + ",";
     // RAIN
+    cout << "RAIN OUT " data.rainfall << endl;
     data_out += this->toStrMaxDecimals(data.rainfall, 1) + ",";
     
     
