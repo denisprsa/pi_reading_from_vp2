@@ -531,14 +531,16 @@ char *WeatherStation::getDateTime(char *_string){
         }
 
     
-     */
+     
     
     
         int vantageDateStamp = stoi(vect_dat.at(0)) + stoi(vect_dat.at(1))*32 + (stoi(vect_dat.at(2))-2000)*512;
         int vantageTimeStamp = (100*stoi(vec_time.at(0)) + stoi(vec_time.at(1)));
+         
+         */
         
-        char b1 = (vantageDateStamp >> 8) & 0xFF;
-        char b2 = vantageDateStamp & 0xFF;
+        char b1 = (234 >> 8) & 0xFF;
+        char b2 = 234 & 0xFF;
         
         char c1 = (vantageTimeStamp >> 8) & 0xFF;
         char c2 = vantageTimeStamp & 0xFF;
