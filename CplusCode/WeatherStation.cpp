@@ -487,10 +487,15 @@ char *WeatherStation::getDateTime(char *_string){
         {
             vect.push_back(i);
             
-            if (ss.peek() == ',')
+            if (ss.peek() == ',' || ss.peek() == ' ')
                 ss.ignore();
         }
+        for (i=0; i< vect.size(); i++)
+            std::cout << vect.at(i)<<std::endl;
         
+        exit(2);
+        
+        /*
         
         stringstream date_t(vect.at(0));
         int d_t_i;
@@ -512,7 +517,7 @@ char *WeatherStation::getDateTime(char *_string){
             if (date.peek() == '.')
                 date.ignore();
         }
-    
+         */
     
     
         stringstream time(vec_dat_time.at(1));
