@@ -89,7 +89,7 @@ void WeatherStation::menu(int argc, char *argv[]){
                 }
                 
                 // SEND COMMAND TO READ OUT ARHIVE DATA
-                if(write(this->fd, 0x1B, 1) != 1){
+                if(write(this->fd, (char)0x1B, 1) != 1){
                     cout << "Error while writing to serial port " << endl;
                     exit(2);
                 }
