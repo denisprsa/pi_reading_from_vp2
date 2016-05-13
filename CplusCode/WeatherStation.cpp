@@ -61,7 +61,7 @@ void WeatherStation::menu(int argc, char *argv[]){
     // VARIABLES FOR READING ARGUMENTS FROM CONSOLE
     extern char *optarg;
     extern int optind, opterr, optopt;
-    
+    char ch;
     int c;
     
     static struct option longopts[] = {
@@ -78,7 +78,7 @@ void WeatherStation::menu(int argc, char *argv[]){
         switch (c) {
             
             case 'a':
-                
+                while (this->ReadNextChar(&ch));
                 // OPENING SERIAL PORT
                 this->OpenSerialPort();
                 
