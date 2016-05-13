@@ -474,10 +474,18 @@ char *WeatherStation::getDateTime(char *_string){
         // FILE DATETIME
         fstream file;
         //file.open("temp.txt");
-        datah[0] = 0xff;
-        datah[1] = 0xff;
-        datah[2] = 0xff;
-        datah[3] = 0xff;
+        int vantageDateStamp = 1 + 5*32 + (2016-2000)*512;
+        int vantageTimeStamp = (100*4 + 20);
+        
+        char b1 = (vantageDateStamp >> 8) & 0xFF;
+        char b2 = vantageDateStamp & 0xFF;
+        
+        char c1 = (vantageTimeStamp >> 8) & 0xFF;
+        char c2 = vantageTimeStamp & 0xFF;
+        datah[0] = b2;
+        datah[1] = b1;
+        datah[2] = c2;
+        datah[3] = c1;
         i = this->CheckCRC(4, datah);
         datah[4] = HIBYTE(i);
         datah[5] = LOBYTE(i);
