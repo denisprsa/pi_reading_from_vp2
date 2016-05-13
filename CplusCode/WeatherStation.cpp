@@ -267,7 +267,7 @@ string WeatherStation::PrepareDataOut(ARDATA_c_t data){
     double v = data.outsideH*0.01*6.112*exp((17.62*data.outside)/(data.outside+243.12));
     double numerator = 243.12*(log(v)/log(2.718281828459045235) )-440.1;
     double denominator = 19.43-(log(v)/log(2.718281828459045235));
-    data_out += this->toStrMaxDecimals(floor(numerator/denominator), 1) + ",";
+    data_out += this->toStrMaxDecimals((floor(numerator/denominator)*10.0) / 10.0 , 1) + ",";
     // BAROMETER
     data_out += this->toStrMaxDecimals(data.barometer, 1) + ",";
     // WINDSPEED HIGH
@@ -333,7 +333,7 @@ ARDATA_c_t WeatherStation::ConvertToHumanData(ARDATA_b_t data){
     // OUTSIDE TEMP LOW (C)
     output_data.lowOut = ((data.lowOut / 10.0) - 32 ) * 5/9;
     // RAIN ACC (mm)
-    output_data.rainfall = data.rainfall * 0.2;
+    output_data.rainfall = data.rainfall;
     // HIGHRAINFALL IN THAT TIME (mm)
     output_data.rainfall = data.highRainFall * 0.2;
     // BAROMETER (mbar)
@@ -347,9 +347,9 @@ ARDATA_c_t WeatherStation::ConvertToHumanData(ARDATA_b_t data){
     // OUTSIDE HUMIDITY
     output_data.outsideH = data.outsideH;
     // AVRAGE WIND SPEED
-    output_data.avgWindSpeed = data.avgWindSpeed;
+    output_data.avgWindSpeed = data.avgWindSpeed * 1.609344;
     // HIGH WIND SPEED
-    output_data.highWindSpeed = data.highWindSpeed;
+    output_data.highWindSpeed = data.highWindSpeed * 1.609344;
     // DIRECTION OF HIGH WIND SPEED
     output_data.directionHighWindSpeed = data.directionHighWindSpeed;
     // DIRECTION OF DOMINANT WIND
