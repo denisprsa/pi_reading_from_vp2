@@ -469,16 +469,68 @@ char *WeatherStation::getDateTime(char *_string){
         cout << endl << file_name << endl;
         // FILE DATETIME
         ifstream file(file_name);
+        
+        string line;
         if(file)
         {
-            std::string line;
+            
             while (file >> ws && getline(file, line));
             cout << line << endl;
         }
+        vector<int> vect, vec_dat_time, vect_dat, vec_time;
+        
+        stringstream ss(line);
+        
+        int i;
+        
+        while (ss >> i)
+        {
+            vect.push_back(i);
+            
+            if (ss.peek() == ',')
+                ss.ignore();
+        }
         
         
-        int vantageDateStamp = day + month*32 + (year-2000)*512;
-        int vantageTimeStamp = (100*hour + minute);
+        stringstream date_t(vect.at(0));
+        int d_t_i;
+        while (date_t >> d_t_i)
+        {
+            vec_dat_time.push_back(d_t_i);
+            
+            if (date_t.peek() == ' ')
+                date_t.ignore();
+        }
+        
+        
+        stringstream date(vec_dat_time.at(0));
+        int d;
+        while (date >> d)
+        {
+            vect_dat.push_back(d);
+            
+            if (date.peek() == '.')
+                date.ignore();
+        }
+    
+    
+    
+        stringstream time(vec_dat_time.at(1));
+        int t;
+        while (time >> t)
+        {
+            vec_time.push_back(t);
+            
+            if (time.peek() == ':')
+                time.ignore();
+        }
+
+    
+    
+    
+    
+        int vantageDateStamp = stoi(vect_dat.at(0)) + stoi(vect_dat.at(1))*32 + (stoi(vect_dat.at(2))-2000)*512;
+        int vantageTimeStamp = (100*stoi(vec_time.at(0)) + stoi(vec_time.at(1)));
         
         char b1 = (vantageDateStamp >> 8) & 0xFF;
         char b2 = vantageDateStamp & 0xFF;
