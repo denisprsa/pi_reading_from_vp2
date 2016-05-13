@@ -342,7 +342,7 @@ ARDATA_c_t WeatherStation::ConvertToHumanData(ARDATA_b_t data){
     // RAIN ACC (mm)
     output_data.rainfall = ((double)data.rainfall) * 0.2;
     cout << "R " << data.rainfall << "R1 " << (double)data.rainfall << "R2 " << (((double)data.rainfall) * 0.2)<<endl;
-    cout "OUT " <<output_data.rainfall << endl;
+    cout << "OUT " <<output_data.rainfall << endl;
     // HIGHRAINFALL IN THAT TIME (mm)
     output_data.rainfall = data.highRainFall * 0.2;
     // BAROMETER (mbar)
