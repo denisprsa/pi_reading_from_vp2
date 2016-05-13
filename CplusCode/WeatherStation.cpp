@@ -477,7 +477,15 @@ char *WeatherStation::getDateTime(char *_string){
             while (file >> ws && getline(file, line));
             cout << line << endl;
         }
-        vector<int> vect, vec_dat_time, vect_dat, vec_time;
+        
+        std::istringstream ss(line);
+        std::string token;
+        
+        while(std::getline(ss, token, ',')) {
+            std::cout << token << endl;
+        }
+        
+        /*vector<int> vect, vec_dat_time, vect_dat, vec_time;
         
         stringstream ss(line);
         
