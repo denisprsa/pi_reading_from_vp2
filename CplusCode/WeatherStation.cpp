@@ -466,7 +466,7 @@ char *WeatherStation::getDateTime(char *_string){
     } else if (_string[0] == 'F' && _string[1] == ':' && _string[2] == ':'){
         string file_name = "";
         while(_string[counter] != '\0'){
-            string str(_string[counter]);
+            string str = string(_string[counter]);
             file_name += str;
             counter ++;
         }
