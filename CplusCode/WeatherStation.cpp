@@ -466,16 +466,18 @@ char *WeatherStation::getDateTime(char *_string){
     } else if (_string[0] == 'F' && _string[1] == ':' && _string[2] == ':'){
         string file_name = "";
         while(_string[counter] != '\0'){
+            cout << _string[counter];
             string str = string(&_string[counter]);
             file_name += str;
             counter ++;
         }
-        cout << file_name << endl;
+        
+        cout << endl << file_name << endl;
         // FILE DATETIME
         fstream file;
         //file.open("temp.txt");
-        int vantageDateStamp = 10 + 5*32 + (2016-2000)*512;
-        int vantageTimeStamp = (100*4 + 20);
+        int vantageDateStamp = day + month*32 + (year-2000)*512;
+        int vantageTimeStamp = (100*hour + minute);
         
         char b1 = (vantageDateStamp >> 8) & 0xFF;
         char b2 = vantageDateStamp & 0xFF;
