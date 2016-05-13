@@ -340,6 +340,7 @@ ARDATA_c_t WeatherStation::ConvertToHumanData(ARDATA_b_t data){
     // OUTSIDE TEMP LOW (C)
     output_data.lowOut = ((data.lowOut / 10.0) - 32 ) * 5/9;
     // RAIN ACC (mm)
+    cout << "RAINFALL " << data.rainfall<< endl;
     output_data.rainfall = data.rainfall;
     // HIGHRAINFALL IN THAT TIME (mm)
     output_data.rainfall = data.highRainFall * 0.2;
