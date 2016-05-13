@@ -542,8 +542,8 @@ char *WeatherStation::getDateTime(char *_string){
         char b1 = (234 >> 8) & 0xFF;
         char b2 = 234 & 0xFF;
         
-        char c1 = (vantageTimeStamp >> 8) & 0xFF;
-        char c2 = vantageTimeStamp & 0xFF;
+        char c1 = (222 >> 8) & 0xFF;
+        char c2 = 222 & 0xFF;
         datah[0] = b2;
         datah[1] = b1;
         datah[2] = c2;
