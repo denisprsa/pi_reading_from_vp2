@@ -61,7 +61,7 @@ void WeatherStation::menu(int argc, char *argv[]){
     // VARIABLES FOR READING ARGUMENTS FROM CONSOLE
     extern char *optarg;
     extern int optind, opterr, optopt;
-    
+    char ch = 0x1B;
     int c;
     
     static struct option longopts[] = {
@@ -79,6 +79,7 @@ void WeatherStation::menu(int argc, char *argv[]){
             
             case 'a':
                 
+                
                 // OPENING SERIAL PORT
                 this->OpenSerialPort();
                 
@@ -87,7 +88,13 @@ void WeatherStation::menu(int argc, char *argv[]){
                     cout << "Error while waking up weather station! Check connection." << endl;
                     exit(2);
                 }
-                
+                while (this->ReadNextChar(&ch)) {
+                    cout << (int)ch << endl;
+                    char esc = 0x1B;
+                    if(write(this->fd, &esc, 1) != 1){
+                        cout<< "MOKO ERROR " << endl;
+                    }
+                }
                 // SEND COMMAND TO READ OUT ARHIVE DATA
                 if(write(this->fd, "DMPAFT\n", 7) != 7){
                     cout << "Error while writing to serial port " << endl;
@@ -397,7 +404,7 @@ bool WeatherStation::checkACK(){
     char ch = 0x00;
     this->ReadNextChar(&ch);
     if(ch != 0x06){
-        cout << "Error ! No ACK recevied." << endl;
+        cout << "Error ! No ACK recevied: "<< (int)ch << endl;
         return false;
     }
     return true;
