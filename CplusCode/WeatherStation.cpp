@@ -524,15 +524,16 @@ char *WeatherStation::getDateTime(char *_string){
             
             break;
         }
+        
         int vantageDateStamp = day + month*32 + (year-2000)*512;
         int vantageTimeStamp = (100*hour + minute);
         
+        char b1 = (vantageDateStamp >> 8) & 0xFF;
+        char b2 = vantageDateStamp & 0xFF;
         
-        char b1 = (234 >> 8) & 0xFF;
-        char b2 = 234 & 0xFF;
+        char c1 = (vantageTimeStamp >> 8) & 0xFF;
+        char c2 = vantageTimeStamp & 0xFF;
         
-        char c1 = (222 >> 8) & 0xFF;
-        char c2 = 222 & 0xFF;
         datah[0] = b2;
         datah[1] = b1;
         datah[2] = c2;
