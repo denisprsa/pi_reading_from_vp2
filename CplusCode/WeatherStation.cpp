@@ -482,70 +482,50 @@ char *WeatherStation::getDateTime(char *_string){
         std::string token;
         
         while(std::getline(ss, token, ',')) {
-            std::cout << token << endl;
-        }
-        
-        /*vector<int> vect, vec_dat_time, vect_dat, vec_time;
-        
-        stringstream ss(line);
-        
-        int i;
-        
-        while (ss >> i)
-        {
-            vect.push_back(i);
             
-            if (ss.peek() == ',' || ss.peek() == ' ')
-                ss.ignore();
-        }
-        for (i=0; i< vect.size(); i++)
-            std::cout << vect.at(i)<<std::endl;
-        
-        exit(2);
-        
-        /*
-        
-        stringstream date_t(vect.at(0));
-        int d_t_i;
-        while (date_t >> d_t_i)
-        {
-            vec_dat_time.push_back(d_t_i);
-            
-            if (date_t.peek() == ' ')
-                date_t.ignore();
-        }
-        
-        
-        stringstream date(vec_dat_time.at(0));
-        int d;
-        while (date >> d)
-        {
-            vect_dat.push_back(d);
-            
-            if (date.peek() == '.')
-                date.ignore();
-        }
-        
-    
-    
-        stringstream time(vec_dat_time.at(1));
-        int t;
-        while (time >> t)
-        {
-            vec_time.push_back(t);
-            
-            if (time.peek() == ':')
-                time.ignore();
-        }
+            std::istringstream dt(token);
+            std::string ddt;
+            int stej = 0;
+            while(std::getline(dt, ddt, ' ')) {
+                if(stej == 0){
+                    // DATE
+                    std::istringstream dat(ddt);
+                    string dat_s;
+                    int stej_date = 0;
+                    while(std::getline(dat, dat_s, '.')) {
+                        if(stej_date == 0){
+                            cout << "day " << dat_s ;
+                        } else if( stej_date == 1) {
+                            cout << " month " << dat_s ;
+                        } else {
+                            cout << " year " << dat_s ;
+                        }
+                        stej_date++;
+                    }
+                    
+                } else {
+                    // TIME
+                    std::istringstream time(ddt);
+                    string time_s;
+                    int stej_time = 0;
+                    while(std::getline(time, time_s, ':')) {
+                        if(stej_time == 0){
+                            cout << " hour " << time_s ;
+                        } else {
+                            cout << " minutes " << time_s ;
+                        }
+                        stej_time++;
+                    }
 
-    
-     
-    
-    
-        int vantageDateStamp = stoi(vect_dat.at(0)) + stoi(vect_dat.at(1))*32 + (stoi(vect_dat.at(2))-2000)*512;
-        int vantageTimeStamp = (100*stoi(vec_time.at(0)) + stoi(vec_time.at(1)));
-         
-         */
+                }
+                stej++;
+            }
+            
+            break;
+        }
+        int vantageDateStamp = day + month*32 + (year-2000)*512;
+        int vantageTimeStamp = (100*hour + minute);
+        
         
         char b1 = (234 >> 8) & 0xFF;
         char b2 = 234 & 0xFF;
