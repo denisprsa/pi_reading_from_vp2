@@ -511,9 +511,9 @@ char *WeatherStation::getDateTime(char *_string){
                     int stej_time = 0;
                     while(std::getline(time, time_s, ':')) {
                         if(stej_time == 0){
-                            hour = stoi (dat_s, &sz);
+                            hour = stoi (time_s, &sz);
                         } else {
-                            minutes = stoi (dat_s, &sz);
+                            minutes = stoi (time_s, &sz);
                         }
                         stej_time++;
                     }
