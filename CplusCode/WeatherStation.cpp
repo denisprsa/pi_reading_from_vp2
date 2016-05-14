@@ -480,6 +480,7 @@ char *WeatherStation::getDateTime(char *_string){
         
         std::istringstream ss(line);
         std::string token;
+        string::size_type sz;
         
         while(std::getline(ss, token, ',')) {
             
@@ -494,11 +495,11 @@ char *WeatherStation::getDateTime(char *_string){
                     int stej_date = 0;
                     while(std::getline(dat, dat_s, '.')) {
                         if(stej_date == 0){
-                            cout << "day " << dat_s ;
+                            day = stoi (dat_s, &sz);
                         } else if( stej_date == 1) {
-                            cout << " month " << dat_s ;
+                            month = stoi (dat_s, &sz);
                         } else {
-                            cout << " year " << dat_s ;
+                            year = stoi (dat_s, &sz);
                         }
                         stej_date++;
                     }
@@ -510,9 +511,9 @@ char *WeatherStation::getDateTime(char *_string){
                     int stej_time = 0;
                     while(std::getline(time, time_s, ':')) {
                         if(stej_time == 0){
-                            cout << " hour " << time_s ;
+                            hour = stoi (dat_s, &sz);
                         } else {
-                            cout << " minutes " << time_s ;
+                            minutes = stoi (dat_s, &sz);
                         }
                         stej_time++;
                     }
