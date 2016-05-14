@@ -513,7 +513,7 @@ char *WeatherStation::getDateTime(char *_string){
                         if(stej_time == 0){
                             hour = stoi (time_s, &sz);
                         } else {
-                            minutes = stoi (time_s, &sz);
+                            minute = stoi (time_s, &sz);
                         }
                         stej_time++;
                     }
