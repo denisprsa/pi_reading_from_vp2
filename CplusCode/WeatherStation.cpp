@@ -685,6 +685,26 @@ char *WeatherStation::getDateTime(char *_string){
             break;
         }
         
+        
+        time_t t = time(0);
+        struct tm * now = localtime( & t );
+        
+        this->getTimeWeatherStation();
+        
+        if( (year == (now->tm_year + 1900) || year == (now->tm_year + 1900)-1) &&
+           (month == (now->tm_mon + 1) || month == (now->tm_mon) || (month == 12 && now->tm_mon == 0) )  &&
+           (day == now->tm_mday || day == now->tm_mday-1 || ( day > 20 && now->tm_mday == 1)) &&
+            (hour == now->tm_hour || hour == now->tm_hour - 1 || ( hour == 23 && now->tm_hour == 0 )) ){
+            
+            if(now->tm_min - minutes < 5){
+                year = now->tm_year;
+                month = now->tm_mon;
+                day = now->tm_mday;
+                hour = now->tm_hour;
+                minutes = now->tm_min;
+            }
+        }
+        
         int vantageDateStamp = day + month*32 + (year-2000)*512;
         int vantageTimeStamp = (100*hour + minute);
         
