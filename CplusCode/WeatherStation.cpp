@@ -60,7 +60,6 @@ void WeatherStation::menu(int argc, char *argv[]){
     
     // VARIABLES FOR READING ARGUMENTS FROM CONSOLE
     extern char *optarg;
-    extern int optind, opterr, optopt;
     char ch = 0x1B;
     char SerBuffer[4200];
     int num_pack;
@@ -152,7 +151,7 @@ void WeatherStation::menu(int argc, char *argv[]){
                         static char ACKS[1];
                         ACKS[0] = 0x06;
                         
-                        if(write(this->fd, &ACKS, strlen(ACKS) ) != strlen(ACKS)){
+                        if(write(this->fd, &ACKS, strlen(ACKS) ) != 1){
                             cout << "Error while sending ACK to serial port." << endl;
                         }
                         tcdrain(this->fd);
@@ -197,7 +196,7 @@ void WeatherStation::menu(int argc, char *argv[]){
                     static char ACKS[1];
                     ACKS[0] = 0x1b;
                     
-                    if(write(this->fd, &ACKS, strlen(ACKS) ) != strlen(ACKS)){
+                    if(write(this->fd, &ACKS, strlen(ACKS) ) != 1){
                         cout << "Error while sending ACK to serial port." << endl;
                     }
                     tcdrain(this->fd);
@@ -342,7 +341,7 @@ string WeatherStation::getTimeWeatherStation(){
         cout << "Trying once again ..." << endl;
         
         // TODO ::::
-        break;
+        
     }
     
     
@@ -405,7 +404,7 @@ void WeatherStation::SaveDataToFile(vector<ARDATA_c_t> data_to_save){
     // OPEN FILE AND APPEND DATA
     out_file.open(this->data_filename, std::ofstream::out | std::ofstream::app);
     
-    for(int i = 0; i < data_to_save.size(); i++){
+    for(unsigned int i = 0; i < data_to_save.size(); i++){
         string out_data = this->PrepareDataOut(data_to_save[i]);
         
         out_file << out_data << "\n";
