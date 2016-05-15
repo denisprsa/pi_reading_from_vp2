@@ -356,6 +356,54 @@ string WeatherStation::getTimeWeatherStation(){
     return " ";
 }
 
+void WeatherStation::setTimeWeatherStation(){
+    
+    
+    char SerBuffer[4200];
+    int num_pack, i;
+    char ch;
+    
+    // IF ANY DATA IN SERIAL
+    while(this->ReadNextChar(&ch));
+    
+    // SEND FOR REAL TIME DATA
+    if(write(this->fd, "SETTIME\n", 8) != 8){
+        cout << "Error while writing to serial port " << endl;
+        exit(2);
+    }
+    tcdrain(this->fd);
+    
+    if(!checkACK()){
+        exit(2);
+    }
+    time_t now = time(0);
+    tm *ltm = localtime(&now);
+    
+    SerBuffer[5] = ltm->tm_year;
+    SerBuffer[4] = ltm->tm_mo + 1;
+    SerBuffer[3] = ltm->tm_mday;
+    SerBuffer[2] = ltm->tm_hour;
+    SerBuffer[1] = ltm->tm_min;
+    SerBuffer[0] = ltm->tm_sec;
+    i = this->CheckCRC(6, SerBuffer);
+    SerBuffer[6]] = HIBYTE(i);
+    SerBuffer[7] = LOBYTE(i);
+    
+    // WRITE DATE TIME AND LOW AND HIGH BITS
+    if(write(this->fd, SerBuffer, 8) != 8)
+    {
+        cout << "Error while writing to serial port " << endl;
+        exit(2);
+    }
+    tcdrain(this->fd);
+    
+    // RESPONSE ACK THAT WAS RECIVED DATE AND TIME
+    if(!checkACK()){
+        exit(2);
+    }
+
+}
+
 
 void WeatherStation::readLast15MinuteArhive(){
     
@@ -686,6 +734,7 @@ char *WeatherStation::getDateTime(char *_string){
             break;
         }
         
+        this->setTimeWeatherStation();
         this->getTimeWeatherStation();
         
         

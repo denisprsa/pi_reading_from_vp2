@@ -55,6 +55,7 @@ class WeatherStation{
         void readArchive();
         void readCurrent();
         void readLast15MinuteArhive();
+        void setTimeWeatherStation();
 
 
 };
