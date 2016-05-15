@@ -696,12 +696,12 @@ char *WeatherStation::getDateTime(char *_string){
            (day == now->tm_mday || day == now->tm_mday-1 || ( day > 20 && now->tm_mday == 1)) &&
             (hour == now->tm_hour || hour == now->tm_hour - 1 || ( hour == 23 && now->tm_hour == 0 )) ){
             
-            if(now->tm_min - minutes < 5){
+            if(now->tm_min - minute < 5){
                 year = now->tm_year;
                 month = now->tm_mon;
                 day = now->tm_mday;
                 hour = now->tm_hour;
-                minutes = now->tm_min;
+                minute = now->tm_min;
             }
         }
         
