@@ -693,6 +693,15 @@ char *WeatherStation::getDateTime(char *_string){
         
         time_t real_time;
         time(&real_time);
+        tm *ltm = localtime(&real_time);
+        
+        // print various components of tm structure.
+        cout << "Year" << 1970 + ltm→tm_year<<endl;
+        cout << "Month: "<< 1 + ltm->tm_mon<< endl;
+        cout << "Day: "<<  ltm->tm_mday << endl;
+        cout << "Time: "<< 1 + ltm->tm_hour << ":";
+        cout << 1 + ltm->tm_min << ":";
+        cout << 1 + ltm->tm_sec << endl;
         
         // CONVERT DATE TIME TO UNIX TIMESTAMP
         struct tm * ar_datetime;
@@ -704,10 +713,12 @@ char *WeatherStation::getDateTime(char *_string){
         ar_datetime->tm_hour = hour;
         ar_datetime->tm_min = minute;
         time_t date = mktime ( ar_datetime );
-        cout << "ARCHIVE: " << date << endl << "REAL: " << real_time << " " << endl;
         
         
-        cout << year << " " << month << " " << day << " " << hour << " " << minute << " " << endl;
+        if(real_time - date < 300){
+            
+        }
+        
         
         int vantageDateStamp = day + month*32 + (year-2000)*512;
         int vantageTimeStamp = (100*hour + minute);
