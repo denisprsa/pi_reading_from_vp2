@@ -706,20 +706,7 @@ char *WeatherStation::getDateTime(char *_string){
         time_t date = mktime ( ar_datetime );
         cout << "ARCHIVE: " << archive_time << endl << "REAL: " << date<< " " << ar_datetime << endl;
         
-        if( (year == (now->tm_year + 1900) || year == (now->tm_year + 1900)-1) &&
-           (month == (now->tm_mon + 1) || month == (now->tm_mon) || (month == 12 && now->tm_mon == 0) )  &&
-           (day == now->tm_mday || day == now->tm_mday-1 || ( day > 20 && now->tm_mday == 1)) &&
-            (hour == now->tm_hour || hour == now->tm_hour - 1 || ( hour == 23 && now->tm_hour == 0 )) ){
-            
-            if(now->tm_min - minute < 5){
-                year = now->tm_year;
-                month = now->tm_mon;
-                day = now->tm_mday;
-                hour = now->tm_hour;
-                minute = now->tm_min;
-            }
-        }
-        
+                
         cout << year << " " << month << " " << day << " " << hour << " " << minute << " " << endl;
         
         int vantageDateStamp = day + month*32 + (year-2000)*512;
