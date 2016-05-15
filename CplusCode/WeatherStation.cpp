@@ -90,6 +90,8 @@ void WeatherStation::menu(int argc, char *argv[]){
                     cout << "Error while waking up weather station! Check connection." << endl;
                     exit(2);
                 }
+                
+                const char *dateTime = this->getDateTime(optarg);
                 while (this->ReadNextChar(&ch)) {
                     cout << (int)ch << endl;
                     char esc = 0x1B;
@@ -108,7 +110,7 @@ void WeatherStation::menu(int argc, char *argv[]){
                 
                 
                 // IF NO ERROR THEN GET TIME FROM CONSOLE, OR READ FROM FILE. EXIT IF NO DATETIME PASSED.
-                const char *dateTime = this->getDateTime(optarg);
+               
                 
                 
                 // WRITE DATE TIME AND LOW AND HIGH BITS
