@@ -696,7 +696,7 @@ char *WeatherStation::getDateTime(char *_string){
         tm *ltm = localtime(&real_time);
         
         // print various components of tm structure.
-        cout << "Year" << 1970+ltm->tm_year<<endl;
+        cout << "Year" << 1900+ltm->tm_year<<endl;
         cout << "Month: "<< 1+ltm->tm_mon<< endl;
         cout << "Day: "<<  ltm->tm_mday << endl;
         cout << "Time: "<< 1 + ltm->tm_hour << ":";
