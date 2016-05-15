@@ -35,6 +35,7 @@ class WeatherStation{
         bool ReadRowFromWeatherStation(vector<ARDATA_c_t> &data, char *buffer, int row);
         ARDATA_c_t ConvertToHumanData(ARDATA_b_t data);
         string PrepareDataOut(ARDATA_c_t data);
+        bool PrepareCurrentData(vector<ARDATA_c_t> &data, RTDATA data);
         string toStrMaxDecimals(double value, int decimals);
     
     public:
@@ -46,11 +47,13 @@ class WeatherStation{
         int ReadToBuffer( char *pszBuffer, int nBufSize);
         string ReadJSONsettings(string name_of_file);
     
+    
         void SaveDataToFile(vector<ARDATA_c_t> data_to_save);
         void menu(int argc, char *argv[]);
         void showMenu();
         void readArchive();
         void readCurrent();
+        void readLast15MinuteArhive();
 
 
 };

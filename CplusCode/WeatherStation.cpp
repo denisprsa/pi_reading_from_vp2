@@ -62,6 +62,8 @@ void WeatherStation::menu(int argc, char *argv[]){
     extern char *optarg;
     extern int optind, opterr, optopt;
     char ch = 0x1B;
+    char SerBuffer[4200];
+    int num_pack;
     int c;
     
     static struct option longopts[] = {
@@ -122,8 +124,9 @@ void WeatherStation::menu(int argc, char *argv[]){
                     exit(2);
                 }
                 
-                int num_pack;
-                char SerBuffer[4200];
+                // ACTUAL DATA (NOT PROCESSED)
+                vector<ARDATA_c_t> vec_data;
+                
                 
                 num_pack = this->ReadToBuffer(SerBuffer, sizeof(SerBuffer));
                 cout << "Recived packets: " << num_pack << endl;
@@ -137,54 +140,107 @@ void WeatherStation::menu(int argc, char *argv[]){
                 
                 cout << "Pages: " << pages << " Row: "<< row << endl;
                 
-                bool date_is_smaller = true;
-                bool first_time = true;
-                
-                // ACTUAL DATA (NOT PROCESSED)
-                vector<ARDATA_c_t> vec_data;
-                
-                while (date_is_smaller){
-                    // SEND ACK TO RECIVE NEXT PAGE
+                if(pages != 0){
+                    // ARHIVE
+                    bool date_is_smaller = true;
+                    bool first_time = true;
+                    
+                    
+                    
+                    while (date_is_smaller){
+                        // SEND ACK TO RECIVE NEXT PAGE
+                        static char ACKS[1];
+                        ACKS[0] = 0x06;
+                        
+                        if(write(this->fd, &ACKS, strlen(ACKS) ) != strlen(ACKS)){
+                            cout << "Error while sending ACK to serial port." << endl;
+                        }
+                        tcdrain(this->fd);
+                        
+                        // READ PAGES FROM SERIAL PORT
+                        
+                        num_pack = ReadToBuffer(SerBuffer, sizeof(SerBuffer));
+                        cout << "Received packets was: " << num_pack << endl;
+                        if( num_pack != 267 ){
+                            cout << "Number of packets was incorrect (pages)!" << endl;
+                            cout << "Trying once again ..." << endl;
+                            
+                            // TODO ::::
+                            break;
+                        } else {
+                            // CHECK FOR CRC
+                            if((num_pack = this->CheckCRC(267, SerBuffer))) {
+                                cout << "Error! CRC code : " << num_pack << endl;
+                                cout << "Trying once again ..." << endl;
+                                
+                                // TODO ::::
+                                break;
+                            }
+                            
+                            // IF FIRST TIME CHECK WHAT ROW IN PAGE CONTAINS ACCURATE DATEITME
+                            if( first_time ){
+                                // COPY BUFFER TO STRUCT
+                                if(this->ReadRowFromWeatherStation(vec_data, SerBuffer, row))
+                                    break;
+                                
+                                first_time = false;
+                            } else {
+                                if(this->ReadRowFromWeatherStation(vec_data, SerBuffer, 0))
+                                    break;
+                            }
+                        }
+                        
+                    }
+                } else{
+                    // REALTIME DATA
+                    // CANCEL ARCHIVE DATA
                     static char ACKS[1];
-                    ACKS[0] = 0x06;
+                    ACKS[0] = 0x1b;
                     
                     if(write(this->fd, &ACKS, strlen(ACKS) ) != strlen(ACKS)){
                         cout << "Error while sending ACK to serial port." << endl;
                     }
                     tcdrain(this->fd);
+                    if(!checkACK()){
+                        exit(2);
+                    }
                     
-                    // READ PAGES FROM SERIAL PORT
+                    // IF ANY DATA IN SERIAL
+                    while(this->ReadNextChar(&ch));
                     
+                    // SEND FOR REAL TIME DATA
+                    if(write(this->fd, "LPS 2 1\n", 8) != 8){
+                        cout << "Error while writing to serial port " << endl;
+                        exit(2);
+                    }
+                    tcdrain(this->fd);
+                    
+                    if(!checkACK()){
+                        exit(2);
+                    }
+                    
+                    // READ DATA (IT SHOULD BE 100 BYTES)
                     num_pack = ReadToBuffer(SerBuffer, sizeof(SerBuffer));
-                    cout << "Received packets was: " << num_pack << endl;
-                    if( num_pack != 267 ){
-                        cout << "Number of packets was incorrect (pages)!" << endl;
+                    if(num_pack != 99){
+                        cout << "There was not 100 bytes of data! ERROR" << endl;
+                        exit(2);
+                    }
+                    
+                    // CHECK CRC
+                    if((num_pack = this->CheckCRC(99, SerBuffer))) {
+                        cout << "Error! CRC code : " << num_pack << endl;
                         cout << "Trying once again ..." << endl;
                         
                         // TODO ::::
                         break;
-                    } else {
-                        // CHECK FOR CRC
-                        if((num_pack = this->CheckCRC(267, SerBuffer))) {
-                            cout << "Error! CRC code : " << num_pack << endl;
-                            cout << "Trying once again ..." << endl;
-                            
-                            // TODO ::::
-                            break;
-                        }
-                        
-                        // IF FIRST TIME CHECK WHAT ROW IN PAGE CONTAINS ACCURATE DATEITME
-                        if( first_time ){
-                            // COPY BUFFER TO STRUCT
-                            if(this->ReadRowFromWeatherStation(vec_data, SerBuffer, row))
-                                break;
-                            
-                            first_time = false;
-                        } else {
-                            if(this->ReadRowFromWeatherStation(vec_data, SerBuffer, 0))
-                                break;
-                        }
                     }
+                    
+                    RTDATA data;
+                    memcpy( &data, SerBuffer, sizeof( RTDATA ));
+                    
+                    this->PrepareCurrentData(vec_data, data);
+                    
+                    
                     
                 }
                 
@@ -199,6 +255,111 @@ void WeatherStation::menu(int argc, char *argv[]){
     }
 }
 
+
+// --------------------------------------------------------
+// FUNCTION THAT CHECKS FOR ACK
+// --------------------------------------------------------
+bool WeatherStation::PrepareCurrentData(vector<ARDATA_c_t> &vec_data, RTDATA data){
+    ARDATA_c_t output_data;
+    
+    time_t t = time(0);
+    struct tm * now = localtime( & t );
+    
+    this->getTimeWeatherStation();
+    // CONVERT DATE
+    output_data.year =  (now->tm_year + 1900);
+    output_data.month =  (now->tm_mon + 1);
+    output_data.day =  now->tm_mday;
+    
+    //CONVERT TIME
+    output_data.hour = now->tm_hour;
+    output_data.minutes = now->tm_min;
+    
+    cout << "TimeCOMP " << output_data.day << "." << output_data.month << "." << output_data.year << " H "  << output_data.hour << ":" << output_data.minutes << endl;
+    
+    cout << "TimeCONSOLE " << output_data.day << "." << output_data.month << "." << output_data.year << " H "  << output_data.hour << ":" << output_data.minutes << endl;
+    
+    // OUTSIDE TEMP (C)
+    output_data.outside = (((double)data.outside_temp / 10.0) - 32 ) * 5/9;
+    // RAIN ACC (mm)
+    // TODO ::
+    // output_data.rainfall = ((double)data.rainfall) * 0.2;
+    // PROCESS RAINFALL
+    // READ LAST 15 MIN FROM ARHIVE
+    
+    
+    
+    
+    // BAROMETER (mbar)
+    output_data.barometer = ((double)data.barometer / 1000.0)* 33.8638815;
+    // INISDE HUMIDITY
+    output_data.insideH = (double)data.inside_hum;
+    // OUTSIDE HUMIDITY
+    output_data.outsideH = (double)data.outside_hum;
+    // AVRAGE WIND SPEED
+    output_data.avgWindSpeed = (double)data.wind_speed * 1.609344;
+    // HIGH WIND SPEED
+    output_data.highWindSpeed = (double)data.min_10_wind_gust * 1.609344;
+    // DIRECTION OF DOMINANT WIND
+    output_data.directionDominantWind = (int)data.wind_dir;
+    // UV INDEX
+    output_data.UVindex = (int)data.uv;
+    
+    
+}
+
+string WeatherStation::getTimeWeatherStation(){
+    
+    
+    char SerBuffer[4200];
+    int num_pack;
+    char ch;
+    
+    // IF ANY DATA IN SERIAL
+    while(this->ReadNextChar(&ch));
+    
+    // SEND FOR REAL TIME DATA
+    if(write(this->fd, "GETTIME\n", 8) != 8){
+        cout << "Error while writing to serial port " << endl;
+        exit(2);
+    }
+    tcdrain(this->fd);
+    
+    if(!checkACK()){
+        exit(2);
+    }
+    
+    // READ DATA (IT SHOULD BE 100 BYTES)
+    num_pack = ReadToBuffer(SerBuffer, sizeof(SerBuffer));
+    if(num_pack != 8){
+        cout << "There was not 100 bytes of data! ERROR" << endl;
+        exit(2);
+    }
+    
+    // CHECK CRC
+    if((num_pack = this->CheckCRC(8, SerBuffer))) {
+        cout << "Error! CRC code : " << num_pack << endl;
+        cout << "Trying once again ..." << endl;
+        
+        // TODO ::::
+        break;
+    }
+    
+    
+    cout << (int)SerBuffer[0] << endl;
+    cout << (int)SerBuffer[1] << endl;
+    cout << (int)SerBuffer[2] << endl;
+    cout << (int)SerBuffer[3] << endl;
+    cout << (int)SerBuffer[4] << endl;
+    cout << (int)SerBuffer[5] << endl;
+    cout << (int)SerBuffer[6] << endl;
+    return " ";
+}
+
+
+void WeatherStation::readLast15MinuteArhive(){
+    
+}
 
 // --------------------------------------------------------
 // FUNCTION THAT CHECKS FOR ACK

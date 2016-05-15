@@ -51,6 +51,80 @@ struct ARDATA_b_t
     
 };
 
+struct RTDATA
+{
+    // ID
+    char _l;
+    char _o;
+    char _o1;
+    uint8_t     bar_trend;
+    uint8_t     packet_type;
+    uint16_t    not_used;
+    uint16_t    barometer;
+    uint16_t    inside_temp;
+    uint8_t     inside_hum;
+    uint16_t    outside_temp;
+    uint8_t     wind_speed;
+    uint8_t     not_used_1;
+    uint16_t    wind_dir;
+    uint16_t    min_10_wind_avg;
+    uint16_t    min_2_wind_avg;
+    uint16_t    min_10_wind_gust;
+    uint16_t    wind_direc_10_min_gust;
+    uint16_t    not_used_2;
+    uint16_t    not_used_3;
+    uint16_t    dew_point;
+    uint8_t     not_used_4;
+    uint8_t     outside_hum;
+    uint8_t     not_used_5;
+    uint16_t    heat_index;
+    uint16_t    wind_chill;
+    uint16_t    thsw_index;
+    uint16_t    rain_rate;
+    uint8_t     uv;
+    uint16_t    solar_radiation;
+    uint16_t    storm_rain;
+    uint16_t    start_date_of_storm;
+    uint16_t    daly_rain;
+    uint16_t    last_15_min_rain;
+    uint16_t    last_hour_rain;
+    uint16_t    daly_et;
+    uint16_t    last_24_h_rain;
+    uint8_t     barometric_reduction;
+    uint16_t    barometric_offset;
+    uint16_t    barometric_calibration_number;
+    uint16_t    barometric_sensor_raw_reading;
+    uint16_t    absolute_barometric_pressure;
+    uint16_t    altimeter_settings;
+    
+    uint8_t     not_used_6;
+    uint8_t     not_used_7;
+    
+    uint8_t     next_10_min_wind_speed_grapf_pointer;
+    uint8_t     next_15_min_wind_speed_grapf_pointer;
+    uint8_t     next_1_h_wind_speed_grapf_pointer;
+    uint8_t     next_1_d_wind_speed_grapf_pointer;
+    uint8_t     next_1_min_rain_pointer;
+    uint8_t     next_1_min_rain_storm_pointer;
+    uint8_t     index_to_minute_within_hour;
+    uint8_t     next_monthly_rain;
+    uint8_t     next_yearly_rain;
+    uint8_t     next_sesonal_rain;
+    
+    uint16_t    not_used_8;
+    uint16_t    not_used_9;
+    uint16_t    not_used_10;
+    uint16_t    not_used_11;
+    uint16_t    not_used_12;
+    uint16_t    not_used_13;
+    
+    
+    uint8_t     lf;
+    uint8_t     cr;
+    uint16_t    crc;
+    
+};
+
 // STRUCT FOR ACTUAL DATA (CONVERTED FROM NUMBERS)
 struct ARDATA_c_t
 {
