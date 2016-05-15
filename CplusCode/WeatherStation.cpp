@@ -722,7 +722,7 @@ char *WeatherStation::getDateTime(char *_string){
         
         
         int vantageDateStamp = day + month*32 + (year-2000)*512;
-        int vantageTimeStamp = (100*hour + minute);
+        int vantageTimeStamp = (100*hour + minute +1);
         
         char b1 = (vantageDateStamp >> 8) & 0xFF;
         char b2 = vantageDateStamp & 0xFF;
