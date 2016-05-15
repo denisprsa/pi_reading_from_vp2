@@ -704,7 +704,7 @@ char *WeatherStation::getDateTime(char *_string){
         ar_datetime->tm_hour = hour;
         ar_datetime->tm_min = minute;
         time_t date = mktime ( ar_datetime );
-        cout << "ARCHIVE: " << archive_time << endl << "REAL: " << date<< " " << ar_datetime << endl;
+        cout << "ARCHIVE: " << date << endl << "REAL: " << real_time << " " << endl;
         
         
         cout << year << " " << month << " " << day << " " << hour << " " << minute << " " << endl;
