@@ -710,8 +710,8 @@ char *WeatherStation::getDateTime(char *_string){
         ar_datetime->tm_year = year - 1900;
         ar_datetime->tm_mon = month - 1;
         ar_datetime->tm_mday = day;
-        ar_datetime->tm_hour = hour;
-        ar_datetime->tm_min = minute;
+        ar_datetime->tm_hour = hour-1;
+        ar_datetime->tm_min = minute - 1;
         time_t date = mktime ( ar_datetime );
         
         cout << year << " " << month << " " << day << " " << hour << " " << minute << " " << endl;
