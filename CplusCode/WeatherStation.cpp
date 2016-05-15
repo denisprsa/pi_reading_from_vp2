@@ -692,7 +692,7 @@ char *WeatherStation::getDateTime(char *_string){
         
         
         time_t real_time;
-        time(&rawtime);
+        time(&real_time);
         
         // CONVERT DATE TIME TO UNIX TIMESTAMP
         struct tm * ar_datetime;
@@ -706,7 +706,7 @@ char *WeatherStation::getDateTime(char *_string){
         time_t date = mktime ( ar_datetime );
         cout << "ARCHIVE: " << archive_time << endl << "REAL: " << date<< " " << ar_datetime << endl;
         
-                
+        
         cout << year << " " << month << " " << day << " " << hour << " " << minute << " " << endl;
         
         int vantageDateStamp = day + month*32 + (year-2000)*512;
