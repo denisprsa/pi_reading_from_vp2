@@ -37,6 +37,7 @@ class WeatherStation{
         string PrepareDataOut(ARDATA_c_t data);
         bool PrepareCurrentData(vector<ARDATA_c_t> &data, RTDATA data);
         string toStrMaxDecimals(double value, int decimals);
+        string getTimeWeatherStation();
     
     public:
     
