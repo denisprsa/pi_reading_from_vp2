@@ -704,6 +704,7 @@ char *WeatherStation::getDateTime(char *_string){
                 minute = now->tm_min;
             }
         }
+        
         cout << year << " " << month << " " << day << " " << hour << " " << minute << " " << endl;
         
         int vantageDateStamp = day + month*32 + (year-2000)*512;
