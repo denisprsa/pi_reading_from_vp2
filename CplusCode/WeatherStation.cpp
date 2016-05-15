@@ -745,12 +745,8 @@ char *WeatherStation::getDateTime(char *_string){
         tm *ltm = localtime(&real_time);
         
         // print various components of tm structure.
-        cout << "Year" << 1900+ltm->tm_year<<endl;
-        cout << "Month: "<< 1+ltm->tm_mon<< endl;
-        cout << "Day: "<<  ltm->tm_mday << endl;
-        cout << "Time: "<<  ltm->tm_hour << ":";
-        cout <<  ltm->tm_min << ":";
-        cout <<  ltm->tm_sec << endl;
+        cout << "CURRENT DATA: " << ltm->tm_mday<< "." << 1+ltm->tm_mon << "." << 1900+ltm->tm_year ;
+        cout << " " <<  ltm->tm_hour << ":" << ltm->tm_min << ":" << ltm->tm_sec << endl;
         
         // CONVERT DATE TIME TO UNIX TIMESTAMP
         struct tm * ar_datetime;
@@ -763,12 +759,12 @@ char *WeatherStation::getDateTime(char *_string){
         ar_datetime->tm_min = minute - 1;
         time_t date = mktime ( ar_datetime );
         
-        cout << year << " " << month << " " << day << " " << hour << " " << minute << " " << endl;
+        cout << "ARCHIVE DATA: "<< day << "." << month << "." << year << " " << hour << ":" << minute << " " << endl;
         
         if(real_time - date < 300){
-            cout << real_time - date << endl;
+            cout << "Time between (sec) " << real_time - date << endl;
         } else {
-            cout << real_time - date << endl;
+            cout << "Time between (sec) " << real_time - date << endl;
         }
         
         
