@@ -16,6 +16,7 @@
 #include <getopt.h>     // OPTIONS IN TERMINAL
 #include <vector>
 #include <ctype.h>
+#include <ctime>
 #include <stdint.h>
 #include <sstream>
 #include <complex>
@@ -693,12 +694,12 @@ char *WeatherStation::getDateTime(char *_string){
         double archive_time = 60 * now->tm_min;
         double real_time = 0.0;
         
-        struct tm tm;
-        time_t epoch;
-        if ( strptime(timestamp, "%Y-%m-%d %H:%M:%S", &tm) != NULL ){
-            epoch = mktime(&tm);
-            cout << epoch << endl;
-        }
+        time_t rawtime;
+        std::time(&rawtime);
+        struct tm *tinfo = std::localtime(&rawtime);
+        char buffer[12];
+        strftime(buffer, 12, "%F", tinfo);
+        cout << string(buffer) << endl;
         
         if( (year == (now->tm_year + 1900) || year == (now->tm_year + 1900)-1) &&
            (month == (now->tm_mon + 1) || month == (now->tm_mon) || (month == 12 && now->tm_mon == 0) )  &&
