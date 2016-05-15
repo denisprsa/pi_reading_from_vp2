@@ -698,10 +698,7 @@ char *WeatherStation::getDateTime(char *_string){
         
         time_t rawtime;
         std::time(&rawtime);
-        struct tm *tinfo = std::localtime(&rawtime);
-        char buffer[12];
-        strftime(buffer, 12, "%F", tinfo);
-        cout << string(buffer) << endl;
+        cout << rawtime << endl;
         
         if( (year == (now->tm_year + 1900) || year == (now->tm_year + 1900)-1) &&
            (month == (now->tm_mon + 1) || month == (now->tm_mon) || (month == 12 && now->tm_mon == 0) )  &&
