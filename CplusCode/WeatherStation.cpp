@@ -360,7 +360,7 @@ void WeatherStation::setTimeWeatherStation(){
     
     
     char SerBuffer[4200];
-    int num_pack, i;
+    int i;
     char ch;
     
     // IF ANY DATA IN SERIAL
@@ -380,13 +380,13 @@ void WeatherStation::setTimeWeatherStation(){
     tm *ltm = localtime(&now);
     
     SerBuffer[5] = ltm->tm_year;
-    SerBuffer[4] = ltm->tm_mo + 1;
+    SerBuffer[4] = ltm->tm_mon + 1;
     SerBuffer[3] = ltm->tm_mday;
     SerBuffer[2] = ltm->tm_hour;
     SerBuffer[1] = ltm->tm_min;
     SerBuffer[0] = ltm->tm_sec;
     i = this->CheckCRC(6, SerBuffer);
-    SerBuffer[6]] = HIBYTE(i);
+    SerBuffer[6] = HIBYTE(i);
     SerBuffer[7] = LOBYTE(i);
     
     // WRITE DATE TIME AND LOW AND HIGH BITS
