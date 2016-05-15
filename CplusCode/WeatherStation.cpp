@@ -714,6 +714,7 @@ char *WeatherStation::getDateTime(char *_string){
         ar_datetime->tm_min = minute;
         time_t date = mktime ( ar_datetime );
         
+        cout << year << " " << month << " " << day << " " << hour << " " << minute << " " << endl;
         
         if(real_time - date < 300){
             
