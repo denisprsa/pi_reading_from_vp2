@@ -418,7 +418,6 @@ bool WeatherStation::ReadRowFromWeatherStation(vector<ARDATA_c_t> &data_converte
     int from = 1;
     
     for(int i = 5; i > 0; i--){
-        if(i <= row){
             ARDATA_b_t data;
             memcpy( &data, buffer + from, sizeof( ARDATA_b_t ));
             // OUT OF DATA
@@ -439,7 +438,7 @@ bool WeatherStation::ReadRowFromWeatherStation(vector<ARDATA_c_t> &data_converte
             }
             data_converted.push_back(data_c);
             from += 52;
-        }
+        
     }
     return false;
 }
