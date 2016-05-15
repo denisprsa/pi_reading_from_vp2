@@ -104,11 +104,12 @@ void WeatherStation::menu(int argc, char *argv[]){
                     cout << "Error while writing to serial port " << endl;
                     exit(2);
                 }
+                tcdrain(this->fd);
                 if(!checkACK()){
                     cout << "1 er "<< endl;
                     exit(2);
                 }
-                
+                tcdrain(this->fd);
                 
                 // IF NO ERROR THEN GET TIME FROM CONSOLE, OR READ FROM FILE. EXIT IF NO DATETIME PASSED.
                
@@ -772,7 +773,7 @@ char *WeatherStation::getDateTime(char *_string){
         
         
         int vantageDateStamp = day + month*32 + (year-2000)*512;
-        int vantageTimeStamp = (100*hour + minute +1);
+        int vantageTimeStamp = (100*hour + minute );
         
         char b1 = (vantageDateStamp >> 8) & 0xFF;
         char b2 = vantageDateStamp & 0xFF;
