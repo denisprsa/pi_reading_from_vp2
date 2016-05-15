@@ -105,6 +105,7 @@ void WeatherStation::menu(int argc, char *argv[]){
                     exit(2);
                 }
                 if(!checkACK()){
+                    cout << "1 er "<< endl;
                     exit(2);
                 }
                 
@@ -123,12 +124,12 @@ void WeatherStation::menu(int argc, char *argv[]){
                 
                 // RESPONSE ACK THAT WAS RECIVED DATE AND TIME
                 if(!checkACK()){
+                    cout << "2 er "<< endl;
                     exit(2);
                 }
                 
                 // ACTUAL DATA (NOT PROCESSED)
                 vector<ARDATA_c_t> vec_data;
-                
                 
                 num_pack = this->ReadToBuffer(SerBuffer, sizeof(SerBuffer));
                 cout << "Recived packets: " << num_pack << endl;
