@@ -690,6 +690,15 @@ char *WeatherStation::getDateTime(char *_string){
         struct tm * now = localtime( & t );
         
         this->getTimeWeatherStation();
+        double archive_time = 60 * now->tm_min;
+        double real_time = 0.0;
+        
+        struct tm tm;
+        time_t epoch;
+        if ( strptime(timestamp, "%Y-%m-%d %H:%M:%S", &tm) != NULL ){
+            epoch = mktime(&tm);
+            cout << epoch << endl;
+        }
         
         if( (year == (now->tm_year + 1900) || year == (now->tm_year + 1900)-1) &&
            (month == (now->tm_mon + 1) || month == (now->tm_mon) || (month == 12 && now->tm_mon == 0) )  &&
