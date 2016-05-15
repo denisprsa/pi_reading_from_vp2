@@ -203,9 +203,6 @@ void WeatherStation::menu(int argc, char *argv[]){
                         cout << "Error while sending ACK to serial port." << endl;
                     }
                     tcdrain(this->fd);
-                    if(!checkACK()){
-                        exit(2);
-                    }
                     
                     // IF ANY DATA IN SERIAL
                     while(this->ReadNextChar(&ch));
