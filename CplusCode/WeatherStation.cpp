@@ -688,17 +688,23 @@ char *WeatherStation::getDateTime(char *_string){
             break;
         }
         
-        
-        time_t t = time(0);
-        struct tm * now = localtime( & t );
-        
         this->getTimeWeatherStation();
-        double archive_time = 60 * now->tm_min;
-        double real_time = 0.0;
         
-        time_t rawtime;
-        std::time(&rawtime);
-        cout << rawtime << endl;
+        
+        time_t real_time;
+        time(&rawtime);
+        
+        // CONVERT DATE TIME TO UNIX TIMESTAMP
+        struct tm * ar_datetime;
+        time_t archive_time;
+        ar_datetime = localtime ( &archive_time );
+        ar_datetime->tm_year = year - 1900;
+        ar_datetime->tm_mon = month - 1;
+        ar_datetime->tm_mday = day;
+        ar_datetime->tm_hour = hour;
+        ar_datetime->tm_min = minute;
+        time_t date = mktime ( ar_datetime );
+        cout << "ARCHIVE: " << archive_time << endl << "REAL: " << date<< " " << ar_datetime << endl;
         
         if( (year == (now->tm_year + 1900) || year == (now->tm_year + 1900)-1) &&
            (month == (now->tm_mon + 1) || month == (now->tm_mon) || (month == 12 && now->tm_mon == 0) )  &&
