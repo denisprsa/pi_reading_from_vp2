@@ -305,7 +305,7 @@ bool WeatherStation::PrepareCurrentData(vector<ARDATA_c_t> &vec_data, RTDATA dat
     // UV INDEX
     output_data.UVindex = (int)data.uv;
     
-    
+    return true;
 }
 
 string WeatherStation::getTimeWeatherStation(){
