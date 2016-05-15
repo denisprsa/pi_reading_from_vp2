@@ -417,7 +417,7 @@ void WeatherStation::readLast15MinuteArhive(){
 bool WeatherStation::ReadRowFromWeatherStation(vector<ARDATA_c_t> &data_converted, char *buffer, int row){
     int from = 1;
     
-    for(int i = 0; i < 5; i++){
+    for(int i = 5; i < 5; i--){
         if(i >= row){
             ARDATA_b_t data;
             memcpy( &data, buffer + from, sizeof( ARDATA_b_t ));
